@@ -4,11 +4,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion } from 'framer-motion';
-import { Mail, Lock, LogIn } from 'lucide-react';
+import { Mail, Lock } from 'lucide-react';
 import { toast } from 'sonner';
-import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Card } from '@/components/ui/Card';
 import { useAuthStore } from '@/store/authStore';
 
 const loginSchema = z.object({
@@ -42,76 +40,50 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Animated Background */}
+    <div className="min-h-screen bg-[#080a0f] flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Grid Background */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-full">
-          {/* Gradient orbs */}
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-            className="absolute top-20 left-20 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl"
-          />
-          <motion.div
-            animate={{
-              scale: [1.2, 1, 1.2],
-              opacity: [0.2, 0.4, 0.2],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-            className="absolute bottom-20 right-20 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"
-          />
-          
-          {/* Grid pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px]" />
-        </div>
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-transparent to-purple-900/10" />
       </div>
 
       {/* Content */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md relative z-10"
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="w-full max-w-lg relative z-10"
       >
-        {/* Logo/Brand */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-center mb-8"
-        >
-          <h1 className="text-5xl font-bold text-white mb-2">Vara</h1>
-          <p className="text-gray-400">UAE Designer & Developer Association</p>
-        </motion.div>
-
         {/* Login Card */}
-        <Card className="p-8">
-          <motion.div
+        <div className="bg-[#0c0f16]/95 backdrop-blur-2xl rounded-3xl p-12 border border-[#1e2533] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]">
+          {/* Header */}
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="text-center mb-12"
+          >
+            <h1 className="text-4xl font-bold italic text-white mb-4 tracking-tight">
+              Welcome Back
+            </h1>
+            <p className="text-white/40 text-base">
+              Sign in to your account to continue
+            </p>
+          </motion.div>
+
+          {/* Form */}
+          <motion.form 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            onSubmit={handleSubmit(onSubmit)}
           >
-            <h2 className="text-3xl font-bold text-white mb-2">Welcome Back!</h2>
-            <p className="text-gray-400 mb-8">
-              Log in to continue your creative journey
-            </p>
-
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="space-y-7">
               <Input
-                label="Email"
+                label="Email Address"
                 type="email"
-                placeholder="your@email.com"
+                placeholder="Enter your email"
                 icon={<Mail size={20} />}
                 error={errors.email?.message}
                 {...register('email')}
@@ -125,63 +97,72 @@ export default function Login() {
                 error={errors.password?.message}
                 {...register('password')}
               />
+            </div>
 
-              <div className="flex items-center justify-between">
-                <label className="flex items-center space-x-2 cursor-pointer group">
+            <div className="flex items-center justify-between mt-8 mb-10">
+              <label className="flex items-center gap-3 cursor-pointer group">
+                <div className="relative">
                   <input
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 bg-white/5 border border-white/20 rounded focus:ring-2 focus:ring-white/30 cursor-pointer transition-all"
+                    className="sr-only peer"
                   />
-                  <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
-                    Remember Me
-                  </span>
-                </label>
+                  <div className="w-5 h-5 rounded-md border-2 border-white/20 bg-transparent peer-checked:bg-blue-500 peer-checked:border-blue-500 transition-all duration-200 flex items-center justify-center group-hover:border-white/40">
+                    {rememberMe && (
+                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                  </div>
+                </div>
+                <span className="text-white/50 group-hover:text-white/70 transition-colors">
+                  Remember me
+                </span>
+              </label>
 
-                <Link
-                  to="/forgot-password"
-                  className="text-sm text-gray-400 hover:text-white transition-colors"
-                >
-                  Forgot Password?
-                </Link>
-              </div>
-
-              <Button
-                type="submit"
-                variant="default"
-                size="lg"
-                className="w-full"
-                isLoading={isLoading}
+              <Link
+                to="/forgot-password"
+                className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
               >
-                <LogIn size={20} className="mr-2" />
-                Login
-              </Button>
-            </form>
-
-            <div className="mt-8 text-center">
-              <p className="text-gray-400">
-                Don't have an account?{' '}
-                <Link
-                  to="/register"
-                  className="text-white font-medium hover:underline transition-all"
-                >
-                  Sign up here
-                </Link>
-              </p>
+                Forgot password?
+              </Link>
             </div>
-          </motion.div>
-        </Card>
 
-        {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="text-center mt-8 text-gray-500 text-sm"
-        >
-          <p>© 2026 Vara. All rights reserved.</p>
-        </motion.div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full font-semibold py-4 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed
+                bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600 bg-[length:200%_100%] hover:bg-right
+                text-white text-lg shadow-lg shadow-blue-600/20 hover:shadow-blue-500/30 hover:scale-[1.01] active:scale-[0.99]"
+            >
+              {isLoading ? 'Signing in...' : 'Sign In'}
+            </button>
+          </motion.form>
+
+          {/* Sign Up Link */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            className="text-center mt-10"
+          >
+            <p className="text-white/40 text-base">
+              Don't have an account?{' '}
+              <Link
+                to="/register"
+                className="text-white font-semibold hover:text-blue-400 transition-colors"
+              >
+                Sign up here
+              </Link>
+            </p>
+          </motion.div>
+
+          {/* Copyright */}
+          <div className="text-center mt-10 pt-8 border-t border-white/5">
+            <p className="text-white/20 text-sm">© 2026 Vara. All rights reserved.</p>
+          </div>
+        </div>
       </motion.div>
     </div>
   );

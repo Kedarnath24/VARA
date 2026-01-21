@@ -17,27 +17,29 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-medium text-gray-300 mb-2">
+          <label className="block text-sm font-semibold text-white/90 mb-3 tracking-wide">
             {label}
           </label>
         )}
-        <div className="relative">
+        <div className={cn(
+          "relative flex items-center h-14 rounded-xl transition-all duration-200",
+          "bg-[#141922] border border-[#2a3344]",
+          "hover:border-[#3d4a5c] hover:bg-[#181d28]",
+          "focus-within:border-blue-500/60 focus-within:bg-[#181d28] focus-within:shadow-[0_0_0_3px_rgba(59,130,246,0.1)]",
+          error && "border-red-500/50 focus-within:border-red-500/60 focus-within:shadow-[0_0_0_3px_rgba(239,68,68,0.1)]"
+        )}>
           {icon && (
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+            <div className="flex items-center justify-center w-14 text-white/40">
               {icon}
             </div>
           )}
           <input
             type={inputType}
             className={cn(
-              'w-full px-4 py-3 bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl',
-              'text-white placeholder-gray-500',
-              'focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/30',
-              'transition-all duration-300',
-              'hover:border-white/20',
-              icon && 'pl-12',
-              isPassword && 'pr-12',
-              error && 'border-red-500 focus:ring-red-500/30',
+              'flex-1 h-full bg-transparent text-white placeholder:text-white/30',
+              'focus:outline-none',
+              'text-base tracking-wide',
+              icon ? 'pr-4' : 'px-4',
               className
             )}
             ref={ref}
@@ -47,7 +49,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+              className="flex items-center justify-center w-14 text-white/40 hover:text-white/70 transition-colors"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
