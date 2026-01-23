@@ -101,15 +101,15 @@ export default function Register() {
       <div className="w-full lg:w-1/2 flex items-center justify-center bg-gray-50 px-6 py-12 overflow-y-auto">
         <div className="w-full max-w-lg my-8">
           {/* Register Form Card */}
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-200 px-16 py-12">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-12">
             {/* Title */}
             <div className="mb-8 pt-2 text-center">
               <h2 className="text-3xl font-bold tracking-tight text-gray-900">VARA</h2>
               <p className="mt-1 text-sm text-gray-500">Create your account</p>
             </div>
 
-            {/* Form Container */}
-            <div className="mt-6 max-w-md mx-auto px-6">
+            {/* Form Container with Gray Background */}
+            <div className="mt-8 rounded-2xl border border-gray-100 bg-gray-50 px-12 py-10">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Full Name Field */}
               <div className="space-y-2">
