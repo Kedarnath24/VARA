@@ -71,8 +71,9 @@ export default function Login() {
         <div className="w-full max-w-lg">
           {/* Login Form Card */}
           <div className="bg-white rounded-2xl shadow-xl border border-gray-200 px-16 py-12">
-            {/* Title */}
+            {/* Logo & Title */}
             <div className="mb-8 pt-2 text-center">
+              <img src="/Images/image logo.png" alt="VARA Logo" className="w-20 h-20 mx-auto mb-4 object-contain" />
               <h2 className="text-3xl font-bold tracking-tight text-gray-900">VARA</h2>
               <p className="mt-1 text-sm text-gray-500">Sign in to your account</p>
             </div>
