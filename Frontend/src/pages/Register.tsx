@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Upload, Eye, EyeOff } from 'lucide-react';
+import { Upload } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuthStore } from '@/store/authStore';
 
@@ -19,7 +19,6 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 export default function Register() {
   const navigate = useNavigate();
   const { register: registerUser, isLoading } = useAuthStore();
-  const [showPassword, setShowPassword] = useState(false);
   const [portfolioFile, setPortfolioFile] = useState<File | null>(null);
 
   const {
@@ -100,17 +99,19 @@ export default function Register() {
       {/* Right Side - Register Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center bg-gray-50 px-6 py-12 overflow-y-auto">
         <div className="w-full max-w-lg my-8">
+          {/* Logo */}
+          <img src="/Images/image logo.png" alt="VARA Logo" className="w-30 h-30 mx-auto mb-4 object-contain" />
           {/* Register Form Card */}
           <div className="bg-white rounded-2xl shadow-xl border border-gray-200 px-16 py-12">
-            {/* Logo & Title */}
+            {/* Title */}
             <div className="mb-8 pt-2 text-center">
-              <img src="/Images/image logo.png" alt="VARA Logo" className="w-20 h-20 mx-auto mb-4 object-contain" />
+              
               <h2 className="text-3xl font-bold tracking-tight text-gray-900">VARA</h2>
               <p className="mt-1 text-sm text-gray-500">Create your account</p>
             </div>
 
             {/* Form Container */}
-            <div className="mt-8 max-w-md mx-auto px-6 py-4">
+            <div className="mt-8 max-w-md mx-auto px-16 py-12">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Full Name Field */}
               <div className="space-y-2">

@@ -52,7 +52,7 @@ export default function Login() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-10 lg:px-20 lg:translate-x-20 text-center text-white">
+        <div className="relative z-10 flex h  -full flex-col items-center justify-center px-10 lg:px-20 lg:translate-x-20 text-center text-white">
           <p className="text-sm font-light tracking-[0.3em] mb-8 uppercase">UAE DESIGNERS</p>
           <h1 className="text-6xl font-bold mb-6 leading-tight">
             CREATIVE<br />EXCELLENCE
@@ -67,13 +67,15 @@ export default function Login() {
       </div>
 
       {/* Right Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center bg-gray-50 px-6 py-12 overflow-y-auto">
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-gray-50 px-16 py-12 overflow-y-auto">
         <div className="w-full max-w-lg">
+          {/* Logo */}
+          <img src="/Images/image logo.png" alt="VARA Logo" className="w-30 h-30 mb-4 object-contain" />
           {/* Login Form Card */}
           <div className="bg-white rounded-2xl shadow-xl border border-gray-200 px-16 py-12">
-            {/* Logo & Title */}
+            {/* Title */}
             <div className="mb-8 pt-2 text-center">
-              <img src="/Images/image logo.png" alt="VARA Logo" className="w-20 h-20 mx-auto mb-4 object-contain" />
+             
               <h2 className="text-3xl font-bold tracking-tight text-gray-900">VARA</h2>
               <p className="mt-1 text-sm text-gray-500">Sign in to your account</p>
             </div>
@@ -82,7 +84,7 @@ export default function Login() {
             <div className="mt-8 max-w-md mx-auto px-60 py-10">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Email Field */}
-              <div className="space-y-8">
+              <div className="space-y-2">
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   Email
                 </label>
