@@ -1,39 +1,54 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
-import { useAuthStore } from '@/store/authStore';
 
-const loginSchema = z.object({
+const createPasswordSchema = z.object({
   email: z.string().email('Please enter a valid email'),
-  password: z.string().min(1, 'Password is required'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+  confirmPassword: z.string().min(1, 'Please confirm your password'),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
 });
 
-type LoginFormData = z.infer<typeof loginSchema>;
+type CreatePasswordFormData = z.infer<typeof createPasswordSchema>;
 
-export default function Login() {
+export default function CreatePassword() {
   const navigate = useNavigate();
-  const { login, isLoading } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<CreatePasswordFormData>({
+    resolver: zodResolver(createPasswordSchema),
+    mode: 'onChange',
   });
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: CreatePasswordFormData) => {
     try {
-      await login(data);
-      toast.success('Welcome back!');
-      navigate('/dashboard');
+      setIsLoading(true);
+      
+      // Simulate API call - replace with actual API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      toast.success('Password created successfully!');
+      
+      // Redirect to login page after 1 second
+      setTimeout(() => {
+        navigate('/login');
+      }, 1000);
+      
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Login failed');
+      toast.error(error.response?.data?.message || 'Failed to create password');
+      setIsLoading(false);
     }
   };
 
@@ -66,7 +81,7 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Right Side - Login Form */}
+      {/* Right Side - Create Password Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center bg-gray-50 px-6 py-12 lg:px-16">
       
         <div className="w-full max-w-lg flex flex-col items-center"> 
@@ -74,13 +89,13 @@ export default function Login() {
           <div className="logo-container flex flex-col items-center mb-8">
           <img src="/Images/image logo.png" alt="VARA Logo" className="w-30 h-30 mb-4 object-contain" />
           </div>
-          {/* Login Form Card */}
+          {/* Create Password Form Card */}
           <div className="login-card bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
             {/* Title */}
             <div className="mb-8 pt-2 text-center">
              
               <h2 className="login-title text-3xl font-bold tracking-tight text-gray-900">VARA</h2>
-              <p className="login-description mt-1 text-sm text-gray-500">Sign in to your account</p>
+              <p className="login-description mt-1 text-sm text-gray-500">Create your password</p>
             </div>
 
             {/* Form Container */}
@@ -133,34 +148,46 @@ export default function Login() {
                 )}
               </div>
 
-              {/* Forgot Password */}
-              <div className="flex items-center justify-end">
-                <Link
-                  to="/forgot-password"
-                  className="text-sm font-medium text-gray-600 hover:text-black transition-colors"
-                >
-                  Forgot password?
-                </Link>
+              {/* Confirm Password Field */}
+              <div className="form-group space-y-2">
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                  Confirm Password
+                </label>
+                <div className="password-input-container relative">
+                  <input
+                    id="confirmPassword"
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    placeholder="Confirm your password"
+                    {...register('confirmPassword')}
+                    className="h-12 w-full rounded-lg border border-gray-300 bg-white px-4 pr-12 text-sm text-black placeholder:text-gray-400 outline-none transition-all duration-200 focus:border-black focus:ring-2 focus:ring-black/10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="password-toggle absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff className="h-5 w-5" />
+                    ) : (
+                      <Eye className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+                {errors.confirmPassword && (
+                  <p className="text-xs text-red-500 mt-1">{errors.confirmPassword.message}</p>
+                )}
               </div>
 
-              {/* Sign In Button */}
+              {/* Create Password Button */}
               <button
                 type="submit"
                 disabled={isLoading}
                 className="mt-6 h-12 w-full rounded-lg bg-black text-sm font-semibold text-white transition-all duration-200 hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? 'SIGNING IN...' : 'SIGN IN'}
+                {isLoading ? 'CREATING PASSWORD...' : 'CREATE PASSWORD'}
               </button>
             </form>
           </div>
-
-            {/* Sign Up Link */}
-            <div className="mt-8 text-center text-sm text-gray-600">
-              Don't have an account?{' '}
-              <Link to="/register" className="font-semibold text-black hover:underline transition-all">
-                Sign up
-              </Link>
-            </div>
           </div>
         </div>
       </div>
