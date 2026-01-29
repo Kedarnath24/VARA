@@ -146,7 +146,7 @@ export default function UserDashboard() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [notificationPanelOpen, setNotificationPanelOpen] = useState(false);
   const [showIdCard, setShowIdCard] = useState(false);
@@ -198,8 +198,8 @@ export default function UserDashboard() {
 
       {/* Header */}
       <header className={`sticky top-0 z-50 backdrop-blur-2xl border-b transition-all duration-300 ${isDarkMode ? 'bg-[#09090b]/80 border-white/[0.08]' : 'bg-white/80 border-gray-200'}`}>
-        <div className="w-full max-w-[1600px] mx-auto px-10 lg:px-20 xl:px-28">
-          <div className="flex items-center justify-between h-16">
+        <div className="w-full max-w-[1600px] mx-auto">
+          <div className="flex items-center justify-between h-16 px-10 lg:px-20 xl:px-28">
             {/* Logo */}
             <div className="flex items-center gap-3">
               <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${isDarkMode ? 'bg-white/10' : 'bg-gray-900'}`}>
@@ -395,9 +395,9 @@ export default function UserDashboard() {
       )}
 
       {/* Main Content */}
-      <main className="flex-1 w-full max-w-[1600px] mx-auto px-10 lg:px-20 xl:px-28 py-10 relative z-10">
+      <main className={`flex-1 dashboard-main ${!isDarkMode ? 'light-gradient-bg' : ''}`}>
         {/* Welcome Section with Profile Completion */}
-        <div className="mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="dashboard-welcome animate-in fade-in slide-in-from-bottom-4 duration-500">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className={`text-2xl sm:text-3xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -409,7 +409,7 @@ export default function UserDashboard() {
               </p>
             </div>
             {/* Profile Completion */}
-            <div className={`flex items-center gap-4 px-5 py-3.5 rounded-2xl border backdrop-blur-sm ${isDarkMode ? 'bg-white/[0.03] border-white/[0.08]' : 'bg-white border-gray-200'}`}>
+            <div className={`dashboard-inline-gap px-4 py-3 rounded-2xl border backdrop-blur-sm ${isDarkMode ? 'bg-white/[0.03] border-white/[0.08]' : 'bg-white border-gray-200'}`}>
               <div className="relative w-12 h-12">
                 <svg className="w-12 h-12 transform -rotate-90">
                   <circle cx="24" cy="24" r="20" fill="none" strokeWidth="2.5" className={isDarkMode ? 'stroke-white/[0.08]' : 'stroke-gray-200'} />
@@ -433,7 +433,7 @@ export default function UserDashboard() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+        <div className="dashboard-grid">
           {[
             { icon: Award, label: 'Status', value: 'Active', accent: 'from-emerald-500/20 to-emerald-600/5', iconBg: 'bg-emerald-500/15', iconColor: 'text-emerald-400', shadow: 'shadow-emerald-500/10' },
             { icon: Calendar, label: 'Events', value: `${mockEvents.length} Upcoming`, accent: 'from-blue-500/20 to-blue-600/5', iconBg: 'bg-blue-500/15', iconColor: 'text-blue-400', shadow: 'shadow-blue-500/10' },
@@ -442,7 +442,7 @@ export default function UserDashboard() {
           ].map((stat, index) => (
             <div 
               key={index}
-              className={`group relative rounded-2xl border p-5 transition-all duration-500 hover:scale-[1.03] hover:-translate-y-1 cursor-pointer overflow-hidden ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] hover:border-white/15' : 'bg-white border-gray-200 hover:border-gray-300'} ${isDarkMode ? `hover:shadow-xl hover:${stat.shadow}` : 'hover:shadow-lg'}`}
+              className={`group relative rounded-2xl border dashboard-card-padding transition-all duration-500 hover:scale-[1.03] hover:-translate-y-1 cursor-pointer overflow-hidden ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] hover:border-white/15' : 'bg-white border-gray-200 hover:border-gray-300'} ${isDarkMode ? `hover:shadow-xl hover:${stat.shadow}` : 'hover:shadow-lg'}`}
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Colored gradient on hover */}
@@ -465,7 +465,7 @@ export default function UserDashboard() {
 
         {/* Profile Section */}
         {activeSection === 'profile' && (
-          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="dashboard-stack-lg animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex items-center justify-between">
               <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Profile Information</h2>
               <button className={`text-sm font-medium px-5 py-2.5 rounded-xl border transition-all duration-300 hover:-translate-y-0.5 ${isDarkMode ? 'text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/10 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20' : 'text-gray-700 border-gray-200 hover:bg-gray-50'}`}>
@@ -473,7 +473,7 @@ export default function UserDashboard() {
               </button>
             </div>
 
-            <div className={`rounded-2xl border overflow-hidden shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/20' : 'bg-white border-gray-200 shadow-gray-200/50'}`}>
+            <div className={`dashboard-section rounded-2xl border overflow-hidden shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/20' : 'bg-white border-gray-200 shadow-gray-200/50'}`}>
               {/* Profile Header */}
               <div className={`p-8 border-b ${isDarkMode ? 'border-white/[0.06] bg-gradient-to-r from-violet-500/15 via-transparent to-cyan-500/10' : 'border-gray-100 bg-gradient-to-r from-gray-50 to-white'}`}>
                 <div className="flex items-center gap-6">
@@ -498,8 +498,8 @@ export default function UserDashboard() {
               </div>
 
               {/* Profile Details Grid */}
-              <div className="p-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="dashboard-card-padding-lg">
+                <div className="dashboard-grid-2">
                   {[
                     { icon: Mail, label: 'Email Address', value: mockUser.email, iconBg: 'bg-blue-500/15', iconColor: 'text-blue-400' },
                     { icon: Phone, label: 'Phone Number', value: mockUser.phone, iconBg: 'bg-emerald-500/15', iconColor: 'text-emerald-400' },
@@ -524,9 +524,9 @@ export default function UserDashboard() {
             </div>
 
             {/* Quick Actions */}
-            <div className={`rounded-2xl border p-6 shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/20' : 'bg-white border-gray-200'}`}>
+            <div className={`rounded-2xl border dashboard-card-padding-lg shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/20' : 'bg-white border-gray-200'}`}>
               <h3 className={`text-base font-semibold mb-5 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Quick Actions</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="dashboard-grid-3">
                 {[
                   { icon: Settings, label: 'Account Settings', color: 'hover:border-blue-500/40 hover:bg-blue-500/10', iconColor: 'group-hover:text-blue-400', shadow: 'hover:shadow-blue-500/20' },
                   { icon: Shield, label: 'Privacy & Security', color: 'hover:border-emerald-500/40 hover:bg-emerald-500/10', iconColor: 'group-hover:text-emerald-400', shadow: 'hover:shadow-emerald-500/20' },
@@ -547,7 +547,7 @@ export default function UserDashboard() {
 
         {/* Membership Section */}
         {activeSection === 'membership' && (
-          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-8">
+          <div className="dashboard-stack-lg animate-in fade-in slide-in-from-bottom-4 duration-500 pb-6">
             <div className="flex items-center justify-between">
               <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Membership Details</h2>
               <span className={`px-3 py-1.5 rounded-full text-xs font-medium shadow-lg ${isDarkMode ? 'bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/30 shadow-emerald-500/20' : 'bg-green-100 text-green-700'}`}>
@@ -556,7 +556,7 @@ export default function UserDashboard() {
             </div>
 
             {/* Membership Card with ID */}
-            <div className={`rounded-2xl border overflow-hidden shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/30' : 'bg-white border-gray-200'}`}>
+            <div className={`dashboard-section rounded-2xl border overflow-hidden shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/30' : 'bg-white border-gray-200'}`}>
               {/* Header */}
               <div className={`p-6 border-b ${isDarkMode ? 'border-white/[0.06] bg-gradient-to-r from-amber-500/15 via-transparent to-rose-500/10' : 'border-gray-100 bg-gradient-to-r from-gray-50 to-white'}`}>
                 <div className="flex items-center gap-4">
@@ -571,8 +571,8 @@ export default function UserDashboard() {
               </div>
 
               {/* Details Grid */}
-              <div className="p-6">
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="dashboard-card-padding-lg">
+                <div className="dashboard-grid-4">
                   {[
                     { icon: Award, label: 'Membership Type', value: mockMembership.type, iconBg: 'bg-amber-500/15', iconColor: 'text-amber-400' },
                     { icon: Users, label: 'Category', value: mockMembership.category, iconBg: 'bg-cyan-500/15', iconColor: 'text-cyan-400' },
@@ -596,8 +596,8 @@ export default function UserDashboard() {
               </div>
 
               {/* Membership Progress Bar */}
-              <div className={`px-6 pb-6`}>
-                <div className={`p-5 rounded-xl border ${isDarkMode ? 'border-white/[0.06] bg-white/[0.01]' : 'border-gray-100 bg-gray-50'}`}>
+              <div className="dashboard-card-padding-lg pt-0">
+                <div className={`dashboard-card-padding rounded-xl border ${isDarkMode ? 'border-white/[0.06] bg-white/[0.01]' : 'border-gray-100 bg-gray-50'}`}>
                   <div className="flex items-center justify-between mb-3">
                     <span className={`text-[11px] font-medium uppercase tracking-wider ${isDarkMode ? 'text-white/35' : 'text-gray-500'}`}>Membership Timeline</span>
                     <span className={`text-xs font-semibold ${isDarkMode ? 'text-cyan-400' : 'text-gray-700'}`}>{Math.round(membershipProgress)}% completed</span>
@@ -617,9 +617,9 @@ export default function UserDashboard() {
             </div>
 
             {/* Benefits Section */}
-            <div className={`rounded-2xl border p-6 shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/20' : 'bg-white border-gray-200'}`}>
+            <div className={`rounded-2xl border dashboard-card-padding-lg shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/20' : 'bg-white border-gray-200'}`}>
               <h3 className={`text-base font-semibold mb-5 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Membership Benefits</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="dashboard-grid-3">
                 {mockMembership.benefits.map((benefit, index) => (
                   <div 
                     key={index} 
@@ -633,7 +633,7 @@ export default function UserDashboard() {
             </div>
 
             {/* Digital ID Card Preview */}
-            <div className={`rounded-2xl border p-6 ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06]' : 'bg-white border-gray-200'}`}>
+            <div className={`rounded-2xl border dashboard-card-padding-lg ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06]' : 'bg-white border-gray-200'}`}>
               <div className="flex items-center justify-between mb-5">
                 <h3 className={`text-base font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Digital Member Card</h3>
                 <button 
@@ -693,9 +693,9 @@ export default function UserDashboard() {
             </div>
 
             {/* Member Info & Important Dates Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="dashboard-grid-2">
               {/* Member Information */}
-              <div className={`rounded-2xl border p-6 shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/20' : 'bg-white border-gray-200'}`}>
+              <div className={`rounded-2xl border dashboard-card-padding-lg shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/20' : 'bg-white border-gray-200'}`}>
                 <h3 className={`text-base font-semibold mb-5 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Member Information</h3>
                 <div className="space-y-1">
                   {[
@@ -719,9 +719,9 @@ export default function UserDashboard() {
               </div>
 
               {/* Quick Actions */}
-              <div className={`rounded-2xl border p-6 shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/20' : 'bg-white border-gray-200'}`}>
+              <div className={`rounded-2xl border dashboard-card-padding-lg shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/20' : 'bg-white border-gray-200'}`}>
                 <h3 className={`text-base font-semibold mb-5 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Quick Actions</h3>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="dashboard-grid-2">
                   {[
                     { icon: Eye, label: 'View ID Card', color: 'hover:border-violet-500/40 hover:bg-violet-500/10', iconColor: 'group-hover:text-violet-400', shadow: 'hover:shadow-violet-500/15' },
                     { icon: Download, label: 'Download Certificate', color: 'hover:border-cyan-500/40 hover:bg-cyan-500/10', iconColor: 'group-hover:text-cyan-400', shadow: 'hover:shadow-cyan-500/15' },
@@ -744,7 +744,7 @@ export default function UserDashboard() {
 
         {/* Events Section */}
         {activeSection === 'events' && (
-          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="dashboard-stack-lg animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex items-center justify-between">
               <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Upcoming Events</h2>
               <button className={`text-sm font-medium px-5 py-2.5 rounded-xl border transition-all duration-300 hover:-translate-y-0.5 ${isDarkMode ? 'text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/10 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20' : 'text-gray-700 border-gray-200 hover:bg-gray-50'}`}>
@@ -752,7 +752,7 @@ export default function UserDashboard() {
               </button>
             </div>
 
-            <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[650px] overflow-y-auto pr-2 pb-2 scrollbar-thin ${isDarkMode ? 'scrollbar-thumb-white/10 scrollbar-track-transparent' : 'scrollbar-thumb-gray-300 scrollbar-track-gray-100'}`}>
+            <div className={`dashboard-grid-2 max-h-[650px] overflow-y-auto pr-2 pb-2 scrollbar-thin ${isDarkMode ? 'scrollbar-thumb-white/10 scrollbar-track-transparent' : 'scrollbar-thumb-gray-300 scrollbar-track-gray-100'}`}>
               {mockEvents.map((event, index) => (
                 <div 
                   key={event.id} 
@@ -808,7 +808,7 @@ export default function UserDashboard() {
 
         {/* Announcements Section */}
         {activeSection === 'announcements' && (
-          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="dashboard-stack-lg animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex items-center justify-between">
               <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Announcements</h2>
               <button className={`text-sm font-medium px-5 py-2.5 rounded-xl border transition-all duration-300 hover:-translate-y-0.5 ${isDarkMode ? 'text-violet-400 border-violet-500/30 hover:bg-violet-500/10 hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-500/20' : 'text-gray-700 border-gray-200 hover:bg-gray-50'}`}>
@@ -816,7 +816,7 @@ export default function UserDashboard() {
               </button>
             </div>
 
-            <div className={`space-y-4 max-h-[650px] overflow-y-auto pr-2 pb-2 scrollbar-thin ${isDarkMode ? 'scrollbar-thumb-white/10 scrollbar-track-transparent' : 'scrollbar-thumb-gray-300 scrollbar-track-gray-100'}`}>
+            <div className={`dashboard-stack-md max-h-[650px] overflow-y-auto pr-2 pb-2 scrollbar-thin ${isDarkMode ? 'scrollbar-thumb-white/10 scrollbar-track-transparent' : 'scrollbar-thumb-gray-300 scrollbar-track-gray-100'}`}>
               {mockAnnouncements.map((announcement, index) => {
                 const priorityStyles = {
                   high: { border: 'border-l-rose-500', glow: 'hover:shadow-rose-500/15', icon: 'text-rose-400' },

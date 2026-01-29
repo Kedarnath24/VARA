@@ -635,3 +635,340 @@ html {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ========================================
+   Light Theme Specific Styles
+   ======================================== */
+
+/* Light mode gradient background */
+.light-gradient-bg {
+  background: linear-gradient(135deg, #f8f0ff 0%, #f2f6ff 50%, #eef3ff 100%);
+}
+
+/* Light mode card styles */
+.light-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.light-card:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Light mode status badge */
+.status-badge-active {
+  background-color: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+/* Light mode progress bar */
+.light-progress-bar {
+  background: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.light-progress-fill {
+  background: linear-gradient(90deg, #374151, #1f2937);
+  border-radius: 9999px;
+  transition: width 0.5s ease;
+}
+
+/* Light mode navigation active state */
+.nav-item-active-light {
+  background-color: #f3f4f6;
+  color: #111827;
+  position: relative;
+}
+
+.nav-item-active-light::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background-color: #111827;
+  border-radius: 50%;
+}
+
+/* Light theme header */
+.light-header {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Light theme input styles */
+.light-input {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #111827;
+}
+
+.light-input:focus {
+  outline: none;
+  border-color: #9ca3af;
+  box-shadow: 0 0 0 3px rgba(156, 163, 175, 0.1);
+}
+
+.light-input::placeholder {
+  color: #9ca3af;
+}
+
+/* Light mode icon container */
+.light-icon-container {
+  background-color: #f3f4f6;
+  border-radius: 12px;
+}
+
+/* Light mode stat card */
+.stat-card-light {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card-light:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+  border-color: #d1d5db;
+}
+
+/* Light mode section title */
+.section-title-light {
+  color: #111827;
+  font-weight: 600;
+}
+
+/* Light mode subtle text */
+.text-subtle-light {
+  color: #6b7280;
+}
+
+/* Light mode divider */
+.divider-light {
+  border-color: #e5e7eb;
+}
+
+/* Light mode dropdown */
+.dropdown-light {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+}
+
+/* Light mode footer */
+.footer-light {
+  background: linear-gradient(to bottom, #f9fafb, #f3f4f6);
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Profile completion circle - light mode */
+.profile-circle-light {
+  stroke: #e5e7eb;
+}
+
+.profile-circle-progress-light {
+  stroke: #111827;
+}
+
+/* Membership timeline progress - light mode */
+.timeline-progress-light {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+/* ========================================
+   Animation Utilities
+   ======================================== */
+
+/* Zoom in animation */
+.zoom-in-95 {
+  animation: zoomIn95 0.2s ease-out forwards;
+}
+
+@keyframes zoomIn95 {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ========================================
+   Scrollbar Utilities for Light Mode
+   ======================================== */
+
+.scrollbar-light::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-light::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 3px;
+}
+
+.scrollbar-light::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+.scrollbar-light::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* ========================================
+   Selection Color for Light Mode
+   ======================================== */
+
+.light-selection::selection {
+  background: rgba(99, 102, 241, 0.2);
+  color: #111827;
+}
+
+/* ========================================
+   Focus States for Light Mode
+   ======================================== */
+
+.light-focus:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* ========================================
+   Dashboard Layout Utilities (Spacing Only)
+   ======================================== */
+
+.dashboard-main {
+  width: 100%;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px;
+  position: relative;
+  z-index: 10;
+}
+
+.dashboard-welcome {
+  margin-bottom: 24px;
+}
+
+.dashboard-section {
+  margin-bottom: 32px;
+}
+
+.dashboard-header-row {
+  margin-bottom: 16px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.dashboard-card-padding {
+  padding: 16px;
+}
+
+.dashboard-card-padding-md {
+  padding: 20px;
+}
+
+.dashboard-card-padding-lg {
+  padding: 24px;
+}
+
+.dashboard-stack-sm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dashboard-stack-md {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dashboard-stack-lg {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dashboard-inline-gap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dashboard-actions-gap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboard-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dashboard-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dashboard-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+
+@media (min-width: 1024px) {
+  .dashboard-main {
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .dashboard-main {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+}
