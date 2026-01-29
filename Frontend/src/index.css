@@ -2,7 +2,6 @@
 
 * {
   margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -954,6 +953,11 @@ html {
   gap: 16px;
 }
 
+/* Header row padding to align with main content */
+.flex.items-center.justify-between.h-16 {
+  padding-left: 40px;
+  padding-right: 40px;
+}
 
 @media (min-width: 1024px) {
   .dashboard-main {
