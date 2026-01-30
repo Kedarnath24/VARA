@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import CreatePassword from './pages/create-password';
 import UserDashboard from './pages/UserDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 import { useAuthStore } from './store/authStore';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/create-password" element={token ? <Navigate to="/dashboard" /> : <CreatePassword />} />
         <Route path="/dashboard" element={token ? <div className="min-h-screen bg-black text-white flex items-center justify-center"><h1 className="text-4xl">Welcome to Dashboard!</h1></div> : <Navigate to="/login" />} />
         <Route path="/user-dashboard" element={<UserDashboard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/" element={<Navigate to={token ? "/dashboard" : "/login"} />} />
       </Routes>
     </BrowserRouter>
