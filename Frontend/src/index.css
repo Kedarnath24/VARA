@@ -317,12 +317,58 @@ input {
   }
 }
 
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
   }
   100% {
     background-position: 200% 0;
+  }
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(-5px) translateX(-5px);
+  }
+  75% {
+    transform: translateY(-15px) translateX(3px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    filter: blur(40px);
+    opacity: 0.6;
+  }
+  50% {
+    filter: blur(60px);
+    opacity: 0.8;
   }
 }
 
@@ -345,6 +391,23 @@ input {
 
 .animate-pulse-subtle {
   animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 8s ease-in-out infinite;
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+.animate-float-gentle {
+  animation: float-gentle 12s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 4s ease-in-out infinite;
 }
 
 /* Staggered animations */
@@ -644,6 +707,126 @@ html {
   background: linear-gradient(135deg, #f8f0ff 0%, #f2f6ff 50%, #eef3ff 100%);
 }
 
+/* Premium Light Background with Multi-layer Gradients */
+.premium-light-bg {
+  position: relative;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+}
+
+.premium-light-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 20% 0%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(14, 165, 233, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 80%, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Premium Dark Background */
+.premium-dark-bg {
+  position: relative;
+  background: linear-gradient(180deg, #0B0D10 0%, #09090b 50%, #050507 100%);
+}
+
+.premium-dark-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 15% 10%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 30%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 90%, rgba(34, 197, 94, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Mesh Gradient Backgrounds */
+.mesh-gradient-dark {
+  background-color: #0B0D10;
+  background-image: 
+    radial-gradient(at 40% 20%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(14, 165, 233, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(168, 85, 247, 0.12) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(34, 197, 94, 0.08) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(244, 63, 94, 0.1) 0px, transparent 50%),
+    radial-gradient(at 80% 100%, rgba(6, 182, 212, 0.1) 0px, transparent 50%);
+}
+
+.mesh-gradient-light {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(at 30% 20%, rgba(139, 92, 246, 0.1) 0px, transparent 50%),
+    radial-gradient(at 70% 10%, rgba(14, 165, 233, 0.08) 0px, transparent 50%),
+    radial-gradient(at 10% 60%, rgba(168, 85, 247, 0.08) 0px, transparent 50%),
+    radial-gradient(at 90% 40%, rgba(34, 197, 94, 0.06) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(244, 63, 94, 0.05) 0px, transparent 50%);
+}
+
+/* Aurora Background Effect */
+.aurora-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.aurora-bg::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    rgba(139, 92, 246, 0.1) 0deg,
+    rgba(6, 182, 212, 0.08) 90deg,
+    rgba(34, 197, 94, 0.06) 180deg,
+    rgba(244, 63, 94, 0.08) 270deg,
+    rgba(139, 92, 246, 0.1) 360deg
+  );
+  animation: aurora-rotate 30s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes aurora-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Noise Texture Overlay */
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Gradient Border Cards */
+.gradient-border-card {
+  position: relative;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3), rgba(34, 197, 94, 0.3));
+}
+
+.gradient-border-card > * {
+  border-radius: 15px;
+}
+
+/* Glassmorphism with Color Tint */
+.glass-tinted {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(6, 182, 212, 0.03));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 /* Light mode card styles */
 .light-card {
   background: #ffffff;
@@ -874,6 +1057,14 @@ html {
   z-index: 10;
 }
 
+/* Sidebar Dashboard Layout - Wider panels */
+.sidebar-dashboard-main {
+  width: 100%;
+  padding: 24px 32px;
+  position: relative;
+  z-index: 10;
+}
+
 .dashboard-welcome {
   margin-bottom: 24px;
 }
@@ -959,6 +1150,12 @@ html {
   padding-right: 40px;
 }
 
+@media (min-width: 768px) {
+  .sidebar-dashboard-main {
+    padding: 32px 40px;
+  }
+}
+
 @media (min-width: 1024px) {
   .dashboard-main {
     padding-left: 64px;
@@ -968,6 +1165,10 @@ html {
   .dashboard-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+
+  .sidebar-dashboard-main {
+    padding: 32px 48px;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -975,4 +1176,24 @@ html {
     padding-left: 80px;
     padding-right: 80px;
   }
+
+  .sidebar-dashboard-main {
+    padding: 40px 56px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .sidebar-dashboard-main {
+    padding: 40px 64px;
+  }
+}
+
+/* Animation for sidebar slide-in */
+.slide-in-from-left-2 {
+  transform: translateX(-0.5rem);
+  animation: slide-right 0.2s ease-out forwards;
+}
+
+@keyframes slide-right {
+  to { transform: translateX(0); }
 }

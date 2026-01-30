@@ -12,7 +12,6 @@ import {
   LogOut,
   Menu,
   X,
-  ChevronDown,
   Award,
   Clock,
   Users,
@@ -28,7 +27,6 @@ import {
   Twitter,
   Instagram,
   Linkedin,
-  ChevronUp,
   Search,
   Sun,
   Moon,
@@ -144,7 +142,6 @@ export default function UserDashboard() {
   const { logout } = useAuthStore();
   const [activeSection, setActiveSection] = useState('profile');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -188,175 +185,203 @@ export default function UserDashboard() {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col overflow-x-hidden transition-colors duration-500 ${isDarkMode ? 'bg-[#09090b]' : 'bg-gray-100'}`}>
-      {/* Ambient Background Glow with Colors */}
+    <div className={`min-h-screen flex overflow-x-hidden transition-colors duration-500 ${isDarkMode ? 'bg-[#09090b]' : 'bg-[#f8fafc]'}`}>
+      {/* Premium Multi-Layer Background Effects */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-gradient-to-br from-violet-600/15 via-purple-600/8 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute top-[40%] right-[-15%] w-[500px] h-[500px] bg-gradient-to-bl from-cyan-500/12 via-blue-600/6 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-[-10%] left-[20%] w-[450px] h-[450px] bg-gradient-to-tr from-emerald-500/10 via-teal-600/5 to-transparent rounded-full blur-3xl"></div>
+        {/* Base Gradient Layer */}
+        <div className={`absolute inset-0 ${isDarkMode 
+          ? 'bg-gradient-to-br from-[#0c0a1d] via-[#09090b] to-[#0a0d12]' 
+          : 'bg-gradient-to-br from-violet-50/80 via-white to-cyan-50/60'}`}></div>
+        
+        {/* Animated Gradient Orbs - Dark Mode */}
+        {isDarkMode && (
+          <>
+            <div className="absolute top-[-20%] left-[-10%] w-[700px] h-[700px] bg-gradient-to-br from-violet-600/20 via-purple-600/10 to-transparent rounded-full blur-3xl animate-pulse-slow"></div>
+            <div className="absolute top-[30%] right-[-15%] w-[600px] h-[600px] bg-gradient-to-bl from-cyan-500/15 via-blue-600/8 to-transparent rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }}></div>
+            <div className="absolute bottom-[-15%] left-[15%] w-[550px] h-[550px] bg-gradient-to-tr from-emerald-500/12 via-teal-600/6 to-transparent rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+            <div className="absolute top-[60%] left-[50%] w-[400px] h-[400px] bg-gradient-to-r from-rose-500/10 via-pink-500/5 to-transparent rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1.5s' }}></div>
+            
+            {/* Mesh Gradient Overlay */}
+            <div className="absolute inset-0 opacity-30" style={{
+              backgroundImage: `radial-gradient(at 40% 20%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+                               radial-gradient(at 80% 0%, rgba(14, 165, 233, 0.1) 0px, transparent 50%),
+                               radial-gradient(at 0% 50%, rgba(168, 85, 247, 0.12) 0px, transparent 50%),
+                               radial-gradient(at 80% 50%, rgba(34, 197, 94, 0.08) 0px, transparent 50%),
+                               radial-gradient(at 0% 100%, rgba(244, 63, 94, 0.1) 0px, transparent 50%),
+                               radial-gradient(at 80% 100%, rgba(6, 182, 212, 0.1) 0px, transparent 50%)`
+            }}></div>
+            
+            {/* Subtle Grid Pattern */}
+            <div className="absolute inset-0 opacity-[0.02]" style={{
+              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                               linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+              backgroundSize: '60px 60px'
+            }}></div>
+          </>
+        )}
+        
+        {/* Light Mode Background Effects */}
+        {!isDarkMode && (
+          <>
+            <div className="absolute top-[-10%] left-[-5%] w-[600px] h-[600px] bg-gradient-to-br from-violet-200/40 via-purple-100/30 to-transparent rounded-full blur-3xl"></div>
+            <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-gradient-to-bl from-cyan-200/35 via-blue-100/25 to-transparent rounded-full blur-3xl"></div>
+            <div className="absolute bottom-[-5%] left-[30%] w-[450px] h-[450px] bg-gradient-to-tr from-emerald-200/30 via-teal-100/20 to-transparent rounded-full blur-3xl"></div>
+            <div className="absolute top-[50%] right-[20%] w-[350px] h-[350px] bg-gradient-to-l from-rose-200/25 via-pink-100/15 to-transparent rounded-full blur-3xl"></div>
+            <div className="absolute bottom-[20%] right-[-5%] w-[400px] h-[400px] bg-gradient-to-tl from-amber-200/20 via-yellow-100/10 to-transparent rounded-full blur-3xl"></div>
+            
+            {/* Light Mode Mesh Gradient */}
+            <div className="absolute inset-0" style={{
+              backgroundImage: `radial-gradient(at 30% 20%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
+                               radial-gradient(at 70% 10%, rgba(14, 165, 233, 0.06) 0px, transparent 50%),
+                               radial-gradient(at 10% 60%, rgba(168, 85, 247, 0.07) 0px, transparent 50%),
+                               radial-gradient(at 90% 40%, rgba(34, 197, 94, 0.05) 0px, transparent 50%),
+                               radial-gradient(at 50% 80%, rgba(244, 63, 94, 0.05) 0px, transparent 50%)`
+            }}></div>
+            
+            {/* Light Grid Pattern */}
+            <div className="absolute inset-0 opacity-[0.4]" style={{
+              backgroundImage: `linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+                               linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px)`,
+              backgroundSize: '40px 40px'
+            }}></div>
+          </>
+        )}
+        
+        {/* Top Gradient Fade */}
+        <div className={`absolute top-0 left-0 right-0 h-32 ${isDarkMode 
+          ? 'bg-gradient-to-b from-[#09090b] to-transparent' 
+          : 'bg-gradient-to-b from-white/50 to-transparent'}`}></div>
       </div>
 
-      {/* Header */}
-      <header className={`sticky top-0 z-50 backdrop-blur-2xl border-b transition-all duration-300 ${isDarkMode ? 'bg-[#09090b]/80 border-white/[0.08]' : 'bg-white/80 border-gray-200'}`}>
-        <div className="w-full max-w-[1600px] mx-auto">
-          <div className="flex items-center justify-between h-16 px-10 lg:px-20 xl:px-28">
-            {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${isDarkMode ? 'bg-white/10' : 'bg-gray-900'}`}>
-                <img 
-                  src="/Images/image logo.png" 
-                  alt="VARA Logo" 
-                  className="h-6 w-auto"
-                />
-              </div>
-              <span className={`text-lg font-semibold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>VARA</span>
+      {/* Left Sidebar */}
+      <aside className={`fixed left-0 top-0 h-full w-64 z-50 flex flex-col transition-all duration-300 ${isDarkMode ? 'bg-[#0c0c0e]/95 border-r border-white/[0.08]' : 'bg-white/95 border-r border-gray-200'} backdrop-blur-xl ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
+        {/* Logo Section */}
+        <div className={`flex items-center gap-3 px-6 py-5 border-b ${isDarkMode ? 'border-white/[0.08]' : 'border-gray-200'}`}>
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${isDarkMode ? 'bg-white/10' : 'bg-gray-900'}`}>
+            <img 
+              src="/Images/image logo.png" 
+              alt="VARA Logo" 
+              className="h-6 w-auto"
+            />
+          </div>
+          <span className={`text-xl font-semibold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>VARA</span>
+        </div>
+
+        {/* User Profile Section */}
+        <div className={`px-4 py-5 border-b ${isDarkMode ? 'border-white/[0.08]' : 'border-gray-200'}`}>
+          <div className="flex items-center gap-3">
+            <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${isDarkMode ? 'bg-gradient-to-br from-violet-500/30 to-cyan-500/30 ring-1 ring-white/10' : 'bg-gray-900'}`}>
+              <span className={`text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-white'}`}>
+                {mockUser.name.split(' ').map(n => n[0]).join('')}
+              </span>
             </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-8">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveSection(item.id)}
-                  className={`relative px-5 py-2.5 text-sm font-medium rounded-lg transition-all duration-300 ${
-                    activeSection === item.id
-                      ? isDarkMode 
-                        ? 'text-white bg-white/10' 
-                        : 'text-gray-900 bg-gray-100'
-                      : isDarkMode
-                        ? 'text-white/60 hover:text-white hover:bg-white/5'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                  }`}
-                >
-                  {item.label}
-                  {activeSection === item.id && (
-                    <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full ${isDarkMode ? 'bg-white' : 'bg-gray-900'}`}></div>
-                  )}
-                </button>
-              ))}
-            </nav>
-
-            {/* Right Section */}
-            <div className="flex items-center gap-2">
-              {/* Search Button */}
-              <button 
-                onClick={() => setSearchOpen(!searchOpen)}
-                className={`p-2.5 rounded-xl transition-all duration-300 ${isDarkMode ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'}`}
-              >
-                <Search className="w-4.5 h-4.5" />
-              </button>
-
-              {/* Help Button */}
-              <button 
-                className={`p-2.5 rounded-xl transition-all duration-300 ${isDarkMode ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'}`}
-                title="Help & Support"
-              >
-                <HelpCircle className="w-4.5 h-4.5" />
-              </button>
-
-              {/* Scroll to Top Button */}
-              <button 
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className={`p-2.5 rounded-xl transition-all duration-300 ${isDarkMode ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'}`}
-                title="Scroll to top"
-              >
-                <ChevronUp className="w-4.5 h-4.5" />
-              </button>
-
-              {/* Theme Toggle */}
-              <button 
-                onClick={() => setIsDarkMode(!isDarkMode)}
-                className={`p-2.5 rounded-xl transition-all duration-300 ${isDarkMode ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'}`}
-              >
-                {isDarkMode ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
-              </button>
-
-              {/* Notifications */}
-              <button 
-                onClick={() => setNotificationPanelOpen(!notificationPanelOpen)}
-                className={`relative p-2.5 rounded-xl transition-all duration-300 ${isDarkMode ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'}`}
-              >
-                <Bell className="w-4.5 h-4.5" />
-                <span className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full animate-pulse"></span>
-              </button>
-
-              {/* User Dropdown */}
-              <div className="relative ml-2">
-                <button
-                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className={`flex items-center gap-2.5 p-1.5 pr-3 rounded-xl transition-all duration-300 ${isDarkMode ? 'hover:bg-white/10' : 'hover:bg-gray-100'}`}
-                >
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isDarkMode ? 'bg-gradient-to-br from-white/20 to-white/5 ring-1 ring-white/10' : 'bg-gray-900'}`}>
-                    <span className={`text-xs font-semibold ${isDarkMode ? 'text-white' : 'text-white'}`}>
-                      {mockUser.name.split(' ').map(n => n[0]).join('')}
-                    </span>
-                  </div>
-                  <ChevronDown className={`w-3.5 h-3.5 hidden sm:block transition-transform duration-300 ${userDropdownOpen ? 'rotate-180' : ''} ${isDarkMode ? 'text-white/40' : 'text-gray-400'}`} />
-                </button>
-
-                {userDropdownOpen && (
-                  <div className={`absolute right-0 mt-2 w-64 rounded-2xl shadow-2xl border p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200 ${isDarkMode ? 'bg-[#14161A] border-white/10' : 'bg-white border-gray-200'}`}>
-                    <div className={`px-3 py-3 rounded-xl mb-1 ${isDarkMode ? 'bg-white/5' : 'bg-gray-50'}`}>
-                      <p className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{mockUser.name}</p>
-                      <p className={`text-xs mt-0.5 ${isDarkMode ? 'text-white/50' : 'text-gray-500'}`}>{mockUser.email}</p>
-                    </div>
-                    <div className="py-1">
-                      <button className={`w-full px-3 py-2.5 text-left text-sm rounded-xl flex items-center gap-3 transition-all duration-200 ${isDarkMode ? 'text-white/70 hover:text-white hover:bg-white/5' : 'text-gray-700 hover:bg-gray-50'}`}>
-                        <Settings className="w-4 h-4" />
-                        Settings
-                      </button>
-                      <button className={`w-full px-3 py-2.5 text-left text-sm rounded-xl flex items-center gap-3 transition-all duration-200 ${isDarkMode ? 'text-white/70 hover:text-white hover:bg-white/5' : 'text-gray-700 hover:bg-gray-50'}`}>
-                        <HelpCircle className="w-4 h-4" />
-                        Help & Support
-                      </button>
-                    </div>
-                    <div className={`border-t pt-1 mt-1 ${isDarkMode ? 'border-white/10' : 'border-gray-100'}`}>
-                      <button
-                        onClick={handleLogout}
-                        className={`w-full px-3 py-2.5 text-left text-sm rounded-xl flex items-center gap-3 transition-all duration-200 ${isDarkMode ? 'text-red-400 hover:bg-red-500/10' : 'text-red-600 hover:bg-red-50'}`}
-                      >
-                        <LogOut className="w-4 h-4" />
-                        Sign out
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`md:hidden p-2.5 rounded-xl ${isDarkMode ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-gray-900'}`}
-              >
-                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
+            <div className="flex-1 min-w-0">
+              <p className={`text-sm font-medium truncate ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{mockUser.name}</p>
+              <p className={`text-xs truncate ${isDarkMode ? 'text-white/50' : 'text-gray-500'}`}>{mockMembership.type} Member</p>
             </div>
           </div>
-
-          {/* Mobile Navigation */}
-          {mobileMenuOpen && (
-            <div className={`md:hidden border-t py-3 animate-in slide-in-from-top duration-200 ${isDarkMode ? 'border-white/10' : 'border-gray-200'}`}>
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    setActiveSection(item.id);
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`w-full px-4 py-3 text-left text-sm font-medium flex items-center gap-3 rounded-xl transition-all duration-200 ${
-                    activeSection === item.id
-                      ? isDarkMode ? 'text-white bg-white/10' : 'text-gray-900 bg-gray-100'
-                      : isDarkMode ? 'text-white/60 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:bg-gray-50'
-                  }`}
-                >
-                  <item.icon className="w-4 h-4" />
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          )}
         </div>
-      </header>
+
+        {/* Navigation */}
+        <nav className="flex-1 px-3 py-4 overflow-y-auto">
+          <div className="space-y-1">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => {
+                  setActiveSection(item.id);
+                  setMobileMenuOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
+                  activeSection === item.id
+                    ? isDarkMode 
+                      ? 'text-white bg-white/10 shadow-lg shadow-white/5' 
+                      : 'text-gray-900 bg-gray-100 shadow-md'
+                    : isDarkMode
+                      ? 'text-white/60 hover:text-white hover:bg-white/5'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`}
+              >
+                <item.icon className={`w-5 h-5 ${activeSection === item.id ? (isDarkMode ? 'text-cyan-400' : 'text-gray-900') : ''}`} />
+                {item.label}
+                {activeSection === item.id && (
+                  <div className={`ml-auto w-1.5 h-1.5 rounded-full ${isDarkMode ? 'bg-cyan-400' : 'bg-gray-900'}`}></div>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Divider */}
+          <div className={`my-4 border-t ${isDarkMode ? 'border-white/[0.08]' : 'border-gray-200'}`}></div>
+
+          {/* Quick Actions */}
+          <div className="space-y-1">
+            
+            <button 
+              onClick={() => setNotificationPanelOpen(!notificationPanelOpen)}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${isDarkMode ? 'text-white/60 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'}`}
+            >
+              <Bell className="w-5 h-5" />
+              Notifications
+              <span className={`ml-auto w-2 h-2 rounded-full animate-pulse ${isDarkMode ? 'bg-cyan-400' : 'bg-gray-900'}`}></span>
+            </button>
+            <button 
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${isDarkMode ? 'text-white/60 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'}`}
+            >
+              <HelpCircle className="w-5 h-5" />
+              Help & Support
+            </button>
+          </div>
+        </nav>
+
+        {/* Bottom Section */}
+        <div className={`px-3 py-4 border-t ${isDarkMode ? 'border-white/[0.08]' : 'border-gray-200'}`}>
+          {/* Theme Toggle */}
+          <button 
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${isDarkMode ? 'text-white/60 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'}`}
+          >
+            {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+          </button>
+          
+          {/* Settings */}
+          <button 
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${isDarkMode ? 'text-white/60 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'}`}
+          >
+            <Settings className="w-5 h-5" />
+            Settings
+          </button>
+
+          {/* Logout */}
+          <button
+            onClick={handleLogout}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${isDarkMode ? 'text-red-400 hover:bg-red-500/10' : 'text-red-600 hover:bg-red-50'}`}
+          >
+            <LogOut className="w-5 h-5" />
+            Sign out
+          </button>
+        </div>
+      </aside>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Menu Toggle - Fixed position */}
+      <button
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        className={`fixed top-4 left-4 z-50 md:hidden p-3 rounded-xl shadow-lg transition-all duration-300 ${isDarkMode ? 'bg-[#14161A] text-white/80 hover:text-white border border-white/10' : 'bg-white text-gray-600 hover:text-gray-900 border border-gray-200'}`}
+      >
+        {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+      </button>
+
+      {/* Main Content Wrapper */}
+      <div className="flex-1 md:ml-64 flex flex-col min-h-screen">
 
       {/* Search Modal */}
       {searchOpen && (
@@ -377,11 +402,17 @@ export default function UserDashboard() {
         </div>
       )}
 
-      {/* Notification Panel */}
+      {/* Notification Panel - Positioned relative to sidebar */}
       {notificationPanelOpen && (
-        <div className={`fixed top-16 right-4 lg:right-8 w-80 max-h-[70vh] rounded-2xl shadow-2xl border z-50 overflow-hidden animate-in slide-in-from-top-2 fade-in duration-200 ${isDarkMode ? 'bg-[#14161A] border-white/10' : 'bg-white border-gray-200'}`}>
-          <div className={`px-4 py-3 border-b ${isDarkMode ? 'border-white/10' : 'border-gray-100'}`}>
+        <div className={`fixed top-20 left-72 w-80 max-h-[70vh] rounded-2xl shadow-2xl border z-[60] overflow-hidden animate-in slide-in-from-left-2 fade-in duration-200 ${isDarkMode ? 'bg-[#14161A] border-white/10' : 'bg-white border-gray-200'}`}>
+          <div className={`px-4 py-3 border-b flex items-center justify-between ${isDarkMode ? 'border-white/10' : 'border-gray-100'}`}>
             <h3 className={`text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Notifications</h3>
+            <button 
+              onClick={() => setNotificationPanelOpen(false)}
+              className={`p-1 rounded-lg transition-colors ${isDarkMode ? 'hover:bg-white/10 text-white/50' : 'hover:bg-gray-100 text-gray-400'}`}
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
           <div className="p-2 max-h-80 overflow-y-auto">
             {mockAnnouncements.map((item) => (
@@ -395,7 +426,7 @@ export default function UserDashboard() {
       )}
 
       {/* Main Content */}
-      <main className={`flex-1 dashboard-main ${!isDarkMode ? 'light-gradient-bg' : ''}`}>
+      <main className={`flex-1 sidebar-dashboard-main ${!isDarkMode ? 'light-gradient-bg' : ''}`}>
         {/* Welcome Section with Profile Completion */}
         <div className="dashboard-welcome animate-in fade-in slide-in-from-bottom-4 duration-500">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -861,8 +892,8 @@ export default function UserDashboard() {
       {/* Footer */}
       <footer className={`mt-auto border-t ${isDarkMode ? 'bg-gradient-to-b from-[#09090b] via-[#07070a] to-[#050507] border-white/[0.06]' : 'bg-gradient-to-b from-gray-50 to-gray-100 border-gray-200'}`}>
         {/* Main Footer Content */}
-        <div className="w-full max-w-[1600px] mx-auto px-10 lg:px-20 xl:px-28 pt-16 pb-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+        <div className="w-full max-w-[1400px] mx-auto px-8 lg:px-12 pt-12 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
             
             {/* Brand Section */}
             <div className="flex flex-col items-center md:items-start">
@@ -920,7 +951,7 @@ export default function UserDashboard() {
 
         {/* Bottom Footer */}
         <div className={`border-t ${isDarkMode ? 'border-white/[0.06] bg-[#050507]' : 'border-gray-200 bg-gray-100'}`}>
-          <div className="w-full max-w-[1600px] mx-auto px-10 lg:px-20 xl:px-28 py-5">
+          <div className="w-full max-w-[1400px] mx-auto px-8 lg:px-12 py-5">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <div className={`w-5 h-5 rounded-md flex items-center justify-center ${isDarkMode ? 'bg-white/[0.08]' : 'bg-gray-900'}`}>
@@ -939,13 +970,13 @@ export default function UserDashboard() {
           </div>
         </div>
       </footer>
+      </div> {/* End of Main Content Wrapper */}
 
-      {/* Click outside to close dropdowns */}
-      {(userDropdownOpen || notificationPanelOpen) && (
+      {/* Click outside to close notification panel */}
+      {notificationPanelOpen && (
         <div 
           className="fixed inset-0 z-40" 
           onClick={() => {
-            setUserDropdownOpen(false);
             setNotificationPanelOpen(false);
           }}
         />
