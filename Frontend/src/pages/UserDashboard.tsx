@@ -34,14 +34,43 @@ import {
   Download,
   Eye,
   Zap,
+  Briefcase,
+  ExternalLink as LinkIcon,
+  CircleDollarSign,
+  Activity,
+  FileText,
+  TrendingUp,
+  Layers,
+  Globe,
+  AlertTriangle,
 } from 'lucide-react';
 
 // Types
 interface UserProfile {
-  name: string;
+  fullName: string;
+  gender: string;
+  ageCategory: string;
+  bloodGroup: string;
+  varaWhatsappGroup: string;
+  companyName: string;
+  jobTitle: string;
+  visaStatus: string;
+  yearsInUAE: string;
+  monthsInUAE: string;
+  totalIndustryExperience: string;
+  primaryAreaOfWork: string;
+  skillsets: string[];
+  portfolioLink: string;
+  interestedInVolunteering: string;
+  volunteeringAreas: string[];
+  country: string;
+  emirate: string;
+  areaName: string;
+  contactNumber: string;
+  whatsappNumber: string;
   email: string;
-  phone: string;
-  address: string;
+  keralaDistrict: string;
+  proceedWithMembershipFee: string;
   memberSince: string;
   avatarUrl?: string;
 }
@@ -59,10 +88,17 @@ interface Membership {
 interface Event {
   id: string;
   title: string;
+  description?: string;
   date: string;
   time: string;
   location: string;
-  type: 'upcoming' | 'past';
+  registrationLink?: string;
+  status?: 'draft' | 'published';
+  createdAt?: string;
+  maxParticipants?: number;
+  category?: string;
+  bannerImage?: string;
+  type?: 'upcoming' | 'past';
 }
 
 interface Announcement {
@@ -73,12 +109,47 @@ interface Announcement {
   priority: 'high' | 'medium' | 'low';
 }
 
+interface Job {
+  id: string;
+  jobTitle: string;
+  description: string;
+  role: string;
+  applicationLink: string;
+  applyByDate: string;
+  location: string;
+  employmentType: string;
+  experienceLevel: string;
+  salary?: string;
+  status: 'draft' | 'published';
+  createdAt: string;
+}
+
 // Mock data
 const mockUser: UserProfile = {
-  name: 'John Doe',
-  email: 'john.doe@example.com',
-  phone: '+1 (555) 123-4567',
-  address: '123 Main Street, New York, NY 10001',
+  fullName: 'Sajeer Moidu',
+  gender: 'Male',
+  ageCategory: '25-34',
+  bloodGroup: 'O+',
+  varaWhatsappGroup: 'Yes',
+  companyName: 'VARA UAE',
+  jobTitle: 'Founder & Chairman',
+  visaStatus: 'Employment Visa',
+  yearsInUAE: '5',
+  monthsInUAE: '0',
+  totalIndustryExperience: '10+ years',
+  primaryAreaOfWork: 'Creative Design',
+  skillsets: ['Graphic Design', 'UI/UX Design', 'Web Development'],
+  portfolioLink: 'https://www.varauae.com',
+  interestedInVolunteering: 'Yes',
+  volunteeringAreas: ['Event Management', 'Community Outreach'],
+  country: 'UAE',
+  emirate: 'Dubai',
+  areaName: 'Business Bay',
+  contactNumber: '+971 50 123 4567',
+  whatsappNumber: '+971 50 123 4567',
+  email: 'sajeer@varauae.com',
+  keralaDistrict: 'Kozhikode',
+  proceedWithMembershipFee: 'Yes',
   memberSince: 'January 2023',
 };
 
@@ -100,10 +171,54 @@ const mockMembership: Membership = {
 };
 
 const mockEvents: Event[] = [
-  { id: '1', title: 'Annual General Meeting', date: '2025-02-15', time: '10:00 AM', location: 'Main Hall', type: 'upcoming' },
-  { id: '2', title: 'Networking Dinner', date: '2025-02-20', time: '7:00 PM', location: 'Grand Ballroom', type: 'upcoming' },
-  { id: '3', title: 'Workshop: Leadership Skills', date: '2025-03-05', time: '2:00 PM', location: 'Room 201', type: 'upcoming' },
-  { id: '4', title: 'Community Service Day', date: '2025-03-15', time: '9:00 AM', location: 'City Park', type: 'upcoming' },
+  { 
+    id: '1', 
+    title: 'Annual General Meeting', 
+    description: 'Join us for our Annual General Meeting to discuss the year\'s achievements and future plans.',
+    date: '2025-02-15', 
+    time: '10:00 AM', 
+    location: 'Main Hall', 
+    type: 'upcoming',
+    bannerImage: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=400&fit=crop',
+    category: 'Conference',
+    registrationLink: 'https://www.varauae.com/events/agm-2025'
+  },
+  { 
+    id: '2', 
+    title: 'Networking Dinner', 
+    description: 'An exclusive networking dinner with industry leaders and creative professionals.',
+    date: '2025-02-20', 
+    time: '7:00 PM', 
+    location: 'Grand Ballroom', 
+    type: 'upcoming',
+    bannerImage: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=400&fit=crop',
+    category: 'Networking',
+    registrationLink: 'https://www.varauae.com/events/networking-dinner'
+  },
+  { 
+    id: '3', 
+    title: 'Workshop: Leadership Skills', 
+    description: 'Develop essential leadership skills to advance your career and inspire your team.',
+    date: '2025-03-05', 
+    time: '2:00 PM', 
+    location: 'Room 201', 
+    type: 'upcoming',
+    bannerImage: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop',
+    category: 'Workshop',
+    registrationLink: 'https://www.varauae.com/events/leadership-workshop'
+  },
+  { 
+    id: '4', 
+    title: 'Community Service Day', 
+    description: 'Give back to the community and make a positive impact together.',
+    date: '2025-03-15', 
+    time: '9:00 AM', 
+    location: 'City Park', 
+    type: 'upcoming',
+    bannerImage: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&h=400&fit=crop',
+    category: 'Community',
+    registrationLink: 'https://www.varauae.com/events/community-service'
+  },
 ];
 
 const mockAnnouncements: Announcement[] = [
@@ -112,12 +227,44 @@ const mockAnnouncements: Announcement[] = [
   { id: '3', title: 'Volunteer Opportunities', content: 'Sign up for upcoming volunteer events and make a difference in our community.', date: '2025-01-05', priority: 'low' },
 ];
 
+const mockJobs: Job[] = [
+  {
+    id: 'JOB-001',
+    jobTitle: 'Senior Software Engineer',
+    description: 'We are looking for an experienced software engineer to join our dynamic team. The ideal candidate will have strong expertise in full-stack development and a passion for building scalable applications.',
+    role: 'Software Development',
+    applicationLink: 'https://careers.vara.ae/apply/senior-software-engineer',
+    applyByDate: '2026-02-28',
+    location: 'Dubai, UAE',
+    employmentType: 'Full-time',
+    experienceLevel: '5+ years',
+    salary: 'AED 15,000 - 20,000',
+    status: 'published',
+    createdAt: '2026-01-20',
+  },
+  {
+    id: 'JOB-002',
+    jobTitle: 'Marketing Manager',
+    description: 'Seeking a creative and strategic Marketing Manager to lead our marketing initiatives. You will be responsible for developing and executing comprehensive marketing campaigns.',
+    role: 'Marketing',
+    applicationLink: 'https://careers.vara.ae/apply/marketing-manager',
+    applyByDate: '2026-03-15',
+    location: 'Abu Dhabi, UAE',
+    employmentType: 'Full-time',
+    experienceLevel: '3+ years',
+    salary: 'AED 12,000 - 18,000',
+    status: 'published',
+    createdAt: '2026-01-22',
+  },
+];
+
 // Navigation items
 const navItems = [
   { id: 'profile', label: 'Profile', icon: User },
   { id: 'membership', label: 'Membership', icon: CreditCard },
   { id: 'events', label: 'Events', icon: Calendar },
   { id: 'announcements', label: 'Announcements', icon: Bell },
+  { id: 'jobs', label: 'Job Recruitment', icon: Briefcase },
 ];
 
 // Calculate membership progress
@@ -130,9 +277,18 @@ const calculateMembershipProgress = () => {
   return Math.min(Math.max((elapsed / total) * 100, 0), 100);
 };
 
+// Calculate days until membership expiry
+const calculateDaysUntilExpiry = () => {
+  const expiryDate = new Date('2025-12-31');
+  const now = new Date();
+  const timeDiff = expiryDate.getTime() - now.getTime();
+  const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  return daysDiff;
+};
+
 // Profile completion calculation
 const calculateProfileCompletion = () => {
-  const fields = [mockUser.name, mockUser.email, mockUser.phone, mockUser.address, mockUser.memberSince];
+  const fields = [mockUser.fullName, mockUser.email, mockUser.contactNumber, mockUser.areaName, mockUser.memberSince];
   const filled = fields.filter(f => f && f.length > 0).length;
   return (filled / fields.length) * 100;
 };
@@ -148,6 +304,10 @@ export default function UserDashboard() {
   const [notificationPanelOpen, setNotificationPanelOpen] = useState(false);
   const [showIdCard, setShowIdCard] = useState(false);
   const [idCardFlipped, setIdCardFlipped] = useState(false);
+
+  // Calculate membership expiry
+  const membershipProgress = calculateMembershipProgress();
+  const daysUntilExpiry = calculateDaysUntilExpiry();
 
   // Simulate loading
   useEffect(() => {
@@ -165,7 +325,6 @@ export default function UserDashboard() {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
 
-  const membershipProgress = calculateMembershipProgress();
   const profileCompletion = calculateProfileCompletion();
 
   // Loading skeleton with premium animation
@@ -272,11 +431,11 @@ export default function UserDashboard() {
           <div className="flex items-center gap-3">
             <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${isDarkMode ? 'bg-gradient-to-br from-violet-500/30 to-cyan-500/30 ring-1 ring-white/10' : 'bg-gray-900'}`}>
               <span className={`text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-white'}`}>
-                {mockUser.name.split(' ').map(n => n[0]).join('')}
+                {mockUser.fullName.split(' ').map(n => n[0]).join('')}
               </span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className={`text-sm font-medium truncate ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{mockUser.name}</p>
+              <p className={`text-sm font-medium truncate ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{mockUser.fullName}</p>
               <p className={`text-xs truncate ${isDarkMode ? 'text-white/50' : 'text-gray-500'}`}>{mockMembership.type} Member</p>
             </div>
           </div>
@@ -343,14 +502,6 @@ export default function UserDashboard() {
           >
             {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-          </button>
-          
-          {/* Settings */}
-          <button 
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${isDarkMode ? 'text-white/60 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'}`}
-          >
-            <Settings className="w-5 h-5" />
-            Settings
           </button>
 
           {/* Logout */}
@@ -432,7 +583,7 @@ export default function UserDashboard() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className={`text-2xl sm:text-3xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                Welcome back, {mockUser.name.split(' ')[0]}
+                Welcome back, {mockUser.fullName.split(' ')[0]}
                 <Sparkles className="inline-block w-6 h-6 ml-2 text-white/40" />
               </h1>
               <p className={`mt-1 ${isDarkMode ? 'text-white/50' : 'text-gray-600'}`}>
@@ -510,14 +661,14 @@ export default function UserDashboard() {
                 <div className="flex items-center gap-6">
                   <div className={`relative w-20 h-20 rounded-2xl flex items-center justify-center overflow-hidden group shadow-2xl ${isDarkMode ? 'bg-gradient-to-br from-violet-500/50 to-cyan-500/50 ring-2 ring-white/20 shadow-violet-500/30' : 'bg-gradient-to-br from-gray-800 to-gray-900'}`}>
                     <span className="text-white text-2xl font-bold drop-shadow-lg">
-                      {mockUser.name.split(' ').map(n => n[0]).join('')}
+                      {mockUser.fullName.split(' ').map(n => n[0]).join('')}
                     </span>
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <Eye className="w-5 h-5 text-white" />
                     </div>
                   </div>
                   <div>
-                    <h3 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{mockUser.name}</h3>
+                    <h3 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{mockUser.fullName}</h3>
                     <div className="flex items-center gap-3 mt-2">
                       <span className={`text-sm ${isDarkMode ? 'text-white/50' : 'text-gray-600'}`}>{mockMembership.type} Member</span>
                       <span className={`px-2.5 py-1 text-xs font-semibold rounded-full shadow-lg ${isDarkMode ? 'bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/30 shadow-emerald-500/20' : 'bg-green-100 text-green-700'}`}>
@@ -530,11 +681,84 @@ export default function UserDashboard() {
 
               {/* Profile Details Grid */}
               <div className="dashboard-card-padding-lg">
-                <div className="dashboard-grid-2">
+                <h3 className={`text-lg font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Personal Information</h3>
+                <div className="dashboard-grid-2 mb-6">
+                  {[
+                    { icon: User, label: 'Gender', value: mockUser.gender, iconBg: 'bg-blue-500/15', iconColor: 'text-blue-400' },
+                    { icon: Calendar, label: 'Age Category', value: mockUser.ageCategory, iconBg: 'bg-purple-500/15', iconColor: 'text-purple-400' },
+                    { icon: Activity, label: 'Blood Group', value: mockUser.bloodGroup, iconBg: 'bg-red-500/15', iconColor: 'text-red-400' },
+                    { icon: MessageCircle, label: 'VARA WhatsApp Group', value: mockUser.varaWhatsappGroup, iconBg: 'bg-green-500/15', iconColor: 'text-green-400' },
+                  ].map((item, index) => (
+                    <div 
+                      key={index}
+                      className={`group flex items-start gap-4 p-5 rounded-xl border transition-all duration-300 cursor-pointer hover:-translate-y-0.5 ${isDarkMode ? 'border-white/[0.06] hover:border-white/15 hover:bg-white/[0.03] hover:shadow-lg hover:shadow-black/20' : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50 hover:shadow-md'}`}
+                    >
+                      <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg ${isDarkMode ? `${item.iconBg} group-hover:shadow-lg` : 'bg-gray-100'}`}>
+                        <item.icon className={`w-5 h-5 ${isDarkMode ? item.iconColor : 'text-gray-600'}`} />
+                      </div>
+                      <div className="min-w-0">
+                        <p className={`text-[11px] font-medium uppercase tracking-wider mb-1.5 ${isDarkMode ? 'text-white/35' : 'text-gray-500'}`}>{item.label}</p>
+                        <p className={`text-sm font-medium ${isDarkMode ? 'text-white/90' : 'text-gray-900'}`}>{item.value}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <h3 className={`text-lg font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Professional Information</h3>
+                <div className="dashboard-grid-2 mb-6">
+                  {[
+                    { icon: Briefcase, label: 'Company Name', value: mockUser.companyName, iconBg: 'bg-indigo-500/15', iconColor: 'text-indigo-400' },
+                    { icon: Award, label: 'Job Title', value: mockUser.jobTitle, iconBg: 'bg-amber-500/15', iconColor: 'text-amber-400' },
+                    { icon: FileText, label: 'Visa Status', value: mockUser.visaStatus, iconBg: 'bg-cyan-500/15', iconColor: 'text-cyan-400' },
+                    { icon: Clock, label: 'Time in UAE', value: `${mockUser.yearsInUAE} years ${mockUser.monthsInUAE} months`, iconBg: 'bg-teal-500/15', iconColor: 'text-teal-400' },
+                    { icon: TrendingUp, label: 'Industry Experience', value: mockUser.totalIndustryExperience, iconBg: 'bg-orange-500/15', iconColor: 'text-orange-400' },
+                    { icon: Layers, label: 'Primary Area of Work', value: mockUser.primaryAreaOfWork, iconBg: 'bg-pink-500/15', iconColor: 'text-pink-400' },
+                  ].map((item, index) => (
+                    <div 
+                      key={index}
+                      className={`group flex items-start gap-4 p-5 rounded-xl border transition-all duration-300 cursor-pointer hover:-translate-y-0.5 ${isDarkMode ? 'border-white/[0.06] hover:border-white/15 hover:bg-white/[0.03] hover:shadow-lg hover:shadow-black/20' : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50 hover:shadow-md'}`}
+                    >
+                      <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg ${isDarkMode ? `${item.iconBg} group-hover:shadow-lg` : 'bg-gray-100'}`}>
+                        <item.icon className={`w-5 h-5 ${isDarkMode ? item.iconColor : 'text-gray-600'}`} />
+                      </div>
+                      <div className="min-w-0">
+                        <p className={`text-[11px] font-medium uppercase tracking-wider mb-1.5 ${isDarkMode ? 'text-white/35' : 'text-gray-500'}`}>{item.label}</p>
+                        <p className={`text-sm font-medium ${isDarkMode ? 'text-white/90' : 'text-gray-900'}`}>{item.value}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <h3 className={`text-lg font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Skills & Portfolio</h3>
+                <div className="mb-6">
+                  <div className={`p-5 rounded-xl border ${isDarkMode ? 'border-white/[0.06] bg-white/[0.02]' : 'border-gray-100 bg-gray-50'}`}>
+                    <p className={`text-[11px] font-medium uppercase tracking-wider mb-3 ${isDarkMode ? 'text-white/35' : 'text-gray-500'}`}>Skillsets</p>
+                    <div className="flex flex-wrap gap-2">
+                      {mockUser.skillsets.map((skill, index) => (
+                        <span key={index} className={`px-3 py-1.5 rounded-lg text-xs font-medium ${isDarkMode ? 'bg-violet-500/15 text-violet-400' : 'bg-violet-100 text-violet-700'}`}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  {mockUser.portfolioLink && (
+                    <div className={`mt-4 p-5 rounded-xl border ${isDarkMode ? 'border-white/[0.06] bg-white/[0.02]' : 'border-gray-100 bg-gray-50'}`}>
+                      <p className={`text-[11px] font-medium uppercase tracking-wider mb-2 ${isDarkMode ? 'text-white/35' : 'text-gray-500'}`}>Portfolio Link</p>
+                      <a href={mockUser.portfolioLink} target="_blank" rel="noopener noreferrer" className={`text-sm font-medium ${isDarkMode ? 'text-cyan-400 hover:text-cyan-300' : 'text-blue-600 hover:text-blue-700'}`}>
+                        {mockUser.portfolioLink}
+                      </a>
+                    </div>
+                  )}
+                </div>
+
+                <h3 className={`text-lg font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Contact Information</h3>
+                <div className="dashboard-grid-2 mb-6">
                   {[
                     { icon: Mail, label: 'Email Address', value: mockUser.email, iconBg: 'bg-blue-500/15', iconColor: 'text-blue-400' },
-                    { icon: Phone, label: 'Phone Number', value: mockUser.phone, iconBg: 'bg-emerald-500/15', iconColor: 'text-emerald-400' },
-                    { icon: MapPin, label: 'Address', value: mockUser.address, iconBg: 'bg-rose-500/15', iconColor: 'text-rose-400' },
+                    { icon: Phone, label: 'Contact Number', value: mockUser.contactNumber, iconBg: 'bg-emerald-500/15', iconColor: 'text-emerald-400' },
+                    { icon: MessageCircle, label: 'WhatsApp Number', value: mockUser.whatsappNumber, iconBg: 'bg-green-500/15', iconColor: 'text-green-400' },
+                    { icon: MapPin, label: 'Location', value: `${mockUser.areaName}, ${mockUser.emirate}, ${mockUser.country}`, iconBg: 'bg-rose-500/15', iconColor: 'text-rose-400' },
+                    { icon: Globe, label: 'Kerala District', value: mockUser.keralaDistrict, iconBg: 'bg-indigo-500/15', iconColor: 'text-indigo-400' },
                     { icon: Clock, label: 'Member Since', value: mockUser.memberSince, iconBg: 'bg-violet-500/15', iconColor: 'text-violet-400' },
                   ].map((item, index) => (
                     <div 
@@ -551,26 +775,26 @@ export default function UserDashboard() {
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
 
-            {/* Quick Actions */}
-            <div className={`rounded-2xl border dashboard-card-padding-lg shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/20' : 'bg-white border-gray-200'}`}>
-              <h3 className={`text-base font-semibold mb-5 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Quick Actions</h3>
-              <div className="dashboard-grid-3">
-                {[
-                  { icon: Settings, label: 'Account Settings', color: 'hover:border-blue-500/40 hover:bg-blue-500/10', iconColor: 'group-hover:text-blue-400', shadow: 'hover:shadow-blue-500/20' },
-                  { icon: Shield, label: 'Privacy & Security', color: 'hover:border-emerald-500/40 hover:bg-emerald-500/10', iconColor: 'group-hover:text-emerald-400', shadow: 'hover:shadow-emerald-500/20' },
-                  { icon: MessageCircle, label: 'Contact Support', color: 'hover:border-violet-500/40 hover:bg-violet-500/10', iconColor: 'group-hover:text-violet-400', shadow: 'hover:shadow-violet-500/20' },
-                ].map((action, index) => (
-                  <button 
-                    key={index}
-                    className={`group flex items-center justify-center gap-3 p-5 rounded-xl border transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-lg ${isDarkMode ? `border-white/[0.06] ${action.color} ${action.shadow}` : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'}`}
-                  >
-                    <action.icon className={`w-5 h-5 transition-all duration-300 group-hover:scale-110 ${isDarkMode ? `text-white/40 ${action.iconColor}` : 'text-gray-600'}`} />
-                    <span className={`text-sm font-medium ${isDarkMode ? 'text-white/60 group-hover:text-white' : 'text-gray-700'}`}>{action.label}</span>
-                  </button>
-                ))}
+                <h3 className={`text-lg font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Volunteering Information</h3>
+                <div className="dashboard-grid-2">
+                  <div className={`p-5 rounded-xl border ${isDarkMode ? 'border-white/[0.06] bg-white/[0.02]' : 'border-gray-100 bg-gray-50'}`}>
+                    <p className={`text-[11px] font-medium uppercase tracking-wider mb-2 ${isDarkMode ? 'text-white/35' : 'text-gray-500'}`}>Interested in Volunteering</p>
+                    <p className={`text-sm font-medium ${isDarkMode ? 'text-white/90' : 'text-gray-900'}`}>{mockUser.interestedInVolunteering}</p>
+                  </div>
+                  {mockUser.volunteeringAreas.length > 0 && (
+                    <div className={`p-5 rounded-xl border ${isDarkMode ? 'border-white/[0.06] bg-white/[0.02]' : 'border-gray-100 bg-gray-50'}`}>
+                      <p className={`text-[11px] font-medium uppercase tracking-wider mb-3 ${isDarkMode ? 'text-white/35' : 'text-gray-500'}`}>Volunteering Areas</p>
+                      <div className="flex flex-wrap gap-2">
+                        {mockUser.volunteeringAreas.map((area, index) => (
+                          <span key={index} className={`px-3 py-1.5 rounded-lg text-xs font-medium ${isDarkMode ? 'bg-emerald-500/15 text-emerald-400' : 'bg-emerald-100 text-emerald-700'}`}>
+                            {area}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -585,6 +809,100 @@ export default function UserDashboard() {
                 {mockMembership.status.charAt(0).toUpperCase() + mockMembership.status.slice(1)}
               </span>
             </div>
+
+            {/* Membership Expiry Reminder */}
+            {daysUntilExpiry <= 14 && daysUntilExpiry > 0 && (
+              <div className={`rounded-2xl border p-5 shadow-lg animate-in fade-in slide-in-from-top-4 duration-500 ${
+                daysUntilExpiry <= 1
+                  ? isDarkMode ? 'bg-red-500/10 border-red-500/30 shadow-red-500/20' : 'bg-red-50 border-red-200'
+                  : daysUntilExpiry <= 7
+                  ? isDarkMode ? 'bg-orange-500/10 border-orange-500/30 shadow-orange-500/20' : 'bg-orange-50 border-orange-200'
+                  : isDarkMode ? 'bg-amber-500/10 border-amber-500/30 shadow-amber-500/20' : 'bg-amber-50 border-amber-200'
+              }`}>
+                <div className="flex items-start gap-4">
+                  <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ${
+                    daysUntilExpiry <= 1
+                      ? isDarkMode ? 'bg-red-500/20' : 'bg-red-100'
+                      : daysUntilExpiry <= 7
+                      ? isDarkMode ? 'bg-orange-500/20' : 'bg-orange-100'
+                      : isDarkMode ? 'bg-amber-500/20' : 'bg-amber-100'
+                  }`}>
+                    <AlertTriangle className={`w-6 h-6 ${
+                      daysUntilExpiry <= 1
+                        ? isDarkMode ? 'text-red-400' : 'text-red-600'
+                        : daysUntilExpiry <= 7
+                        ? isDarkMode ? 'text-orange-400' : 'text-orange-600'
+                        : isDarkMode ? 'text-amber-400' : 'text-amber-600'
+                    }`} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className={`text-base font-semibold mb-2 ${
+                      daysUntilExpiry <= 1
+                        ? isDarkMode ? 'text-red-400' : 'text-red-700'
+                        : daysUntilExpiry <= 7
+                        ? isDarkMode ? 'text-orange-400' : 'text-orange-700'
+                        : isDarkMode ? 'text-amber-400' : 'text-amber-700'
+                    }`}>
+                      {daysUntilExpiry <= 1
+                        ? '⚠️ Membership Expiring Tomorrow!'
+                        : daysUntilExpiry <= 7
+                        ? '⚠️ Membership Expiring Soon!'
+                        : '⏰ Membership Renewal Reminder'}
+                    </h3>
+                    <p className={`text-sm mb-3 ${
+                      daysUntilExpiry <= 1
+                        ? isDarkMode ? 'text-red-300' : 'text-red-600'
+                        : daysUntilExpiry <= 7
+                        ? isDarkMode ? 'text-orange-300' : 'text-orange-600'
+                        : isDarkMode ? 'text-amber-300' : 'text-amber-600'
+                    }`}>
+                      Your membership will expire in <span className="font-bold">{daysUntilExpiry} {daysUntilExpiry === 1 ? 'day' : 'days'}</span> on <span className="font-bold">{mockMembership.expiryDate}</span>. Please renew to continue enjoying your benefits.
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <button className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                        daysUntilExpiry <= 1
+                          ? isDarkMode ? 'bg-red-500 text-white hover:bg-red-600 shadow-lg shadow-red-500/30' : 'bg-red-600 text-white hover:bg-red-700'
+                          : daysUntilExpiry <= 7
+                          ? isDarkMode ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-lg shadow-orange-500/30' : 'bg-orange-600 text-white hover:bg-orange-700'
+                          : isDarkMode ? 'bg-amber-500 text-white hover:bg-amber-600 shadow-lg shadow-amber-500/30' : 'bg-amber-600 text-white hover:bg-amber-700'
+                      }`}>
+                        Renew Membership
+                      </button>
+                      <button className={`text-sm font-medium transition-colors ${
+                        daysUntilExpiry <= 1
+                          ? isDarkMode ? 'text-red-400 hover:text-red-300' : 'text-red-600 hover:text-red-700'
+                          : daysUntilExpiry <= 7
+                          ? isDarkMode ? 'text-orange-400 hover:text-orange-300' : 'text-orange-600 hover:text-orange-700'
+                          : isDarkMode ? 'text-amber-400 hover:text-amber-300' : 'text-amber-600 hover:text-amber-700'
+                      }`}>
+                        Set Reminder
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {daysUntilExpiry <= 0 && (
+              <div className={`rounded-2xl border p-5 shadow-lg animate-pulse ${isDarkMode ? 'bg-red-500/15 border-red-500/40 shadow-red-500/30' : 'bg-red-100 border-red-300'}`}>
+                <div className="flex items-start gap-4">
+                  <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ${isDarkMode ? 'bg-red-500/30' : 'bg-red-200'}`}>
+                    <AlertTriangle className={`w-6 h-6 ${isDarkMode ? 'text-red-400' : 'text-red-700'}`} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className={`text-base font-semibold mb-2 ${isDarkMode ? 'text-red-400' : 'text-red-800'}`}>
+                      🚨 Membership Expired!
+                    </h3>
+                    <p className={`text-sm mb-3 ${isDarkMode ? 'text-red-300' : 'text-red-700'}`}>
+                      Your membership has expired. Renew now to restore access to all benefits and services.
+                    </p>
+                    <button className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 ${isDarkMode ? 'bg-red-500 text-white hover:bg-red-600 shadow-lg shadow-red-500/30' : 'bg-red-700 text-white hover:bg-red-800'}`}>
+                      Renew Now
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Membership Card with ID */}
             <div className={`dashboard-section rounded-2xl border overflow-hidden shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/30' : 'bg-white border-gray-200'}`}>
@@ -669,58 +987,14 @@ export default function UserDashboard() {
                 <h3 className={`text-base font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Digital Member Card</h3>
                 <button 
                   onClick={() => setShowIdCard(!showIdCard)}
-                  className={`text-sm font-medium px-3 py-1.5 rounded-lg transition-all duration-300 ${isDarkMode ? 'text-white/50 hover:text-white hover:bg-white/[0.05]' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'}`}
+                  className={`text-sm font-medium px-5 py-2.5 rounded-xl transition-all duration-300 ${isDarkMode ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
                 >
-                  {showIdCard ? 'Hide Card' : 'View Card'}
+                  View ID Card
                 </button>
               </div>
-              
-              {showIdCard && (
-                <div className="flex justify-center">
-                  <div 
-                    className="relative w-full max-w-sm cursor-pointer perspective-1000"
-                    onClick={() => setIdCardFlipped(!idCardFlipped)}
-                  >
-                    <div className={`relative w-full aspect-[1.6/1] rounded-2xl p-6 transition-all duration-700 transform-style-3d ${idCardFlipped ? 'rotate-y-180' : ''}`}>
-                      {/* Front of Card */}
-                      <div className={`absolute inset-0 rounded-2xl p-6 backface-hidden ${isDarkMode ? 'bg-gradient-to-br from-[#18181b] via-[#141416] to-[#0c0c0e] ring-1 ring-white/[0.08]' : 'bg-gradient-to-br from-gray-800 to-gray-900'}`}>
-                        <div className="h-full flex flex-col justify-between">
-                          <div className="flex items-start justify-between">
-                            <div className="flex items-center gap-2">
-                              <div className="w-8 h-8 rounded-lg bg-white/[0.08] flex items-center justify-center">
-                                <img src="/Images/image logo.png" alt="VARA" className="h-5 w-auto" />
-                              </div>
-                              <span className="text-white font-semibold text-sm">VARA</span>
-                            </div>
-                            <span className="text-[10px] text-white/30 font-mono">{mockMembership.type.toUpperCase()}</span>
-                          </div>
-                          <div>
-                            <p className="text-white font-semibold">{mockUser.name}</p>
-                            <p className="text-white/35 text-xs font-mono mt-1">{mockMembership.id}</p>
-                          </div>
-                          <div className="flex items-end justify-between">
-                            <div>
-                              <p className="text-[10px] text-white/30">VALID UNTIL</p>
-                              <p className="text-white/70 text-xs">{mockMembership.expiryDate}</p>
-                            </div>
-                            <Zap className="w-5 h-5 text-white/15" />
-                          </div>
-                        </div>
-                      </div>
-                      {/* Back of Card */}
-                      <div className={`absolute inset-0 rounded-2xl p-6 backface-hidden rotate-y-180 ${isDarkMode ? 'bg-gradient-to-br from-[#141416] to-[#0c0c0e] ring-1 ring-white/[0.08]' : 'bg-gradient-to-br from-gray-900 to-gray-800'}`}>
-                        <div className="h-full flex flex-col justify-center items-center text-center">
-                          <div className="w-20 h-20 rounded-xl bg-white p-2 mb-3">
-                            <div className="w-full h-full bg-[repeating-linear-gradient(45deg,#000,#000_2px,#fff_2px,#fff_4px)]"></div>
-                          </div>
-                          <p className="text-white/40 text-xs">Scan to verify membership</p>
-                        </div>
-                      </div>
-                    </div>
-                    <p className={`text-center text-xs mt-3 ${isDarkMode ? 'text-white/25' : 'text-gray-400'}`}>Click to flip</p>
-                  </div>
-                </div>
-              )}
+              <p className={`text-sm ${isDarkMode ? 'text-white/60' : 'text-gray-600'}`}>
+                Click the button above to view your official VARA membership ID card
+              </p>
             </div>
 
             {/* Member Info & Important Dates Grid */}
@@ -730,10 +1004,10 @@ export default function UserDashboard() {
                 <h3 className={`text-base font-semibold mb-5 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Member Information</h3>
                 <div className="space-y-1">
                   {[
-                    { icon: User, label: 'Full Name', value: mockUser.name, iconColor: 'text-violet-400' },
+                    { icon: User, label: 'Full Name', value: mockUser.fullName, iconColor: 'text-violet-400' },
                     { icon: Mail, label: 'Email', value: mockUser.email, iconColor: 'text-blue-400' },
-                    { icon: Phone, label: 'Phone', value: mockUser.phone, iconColor: 'text-emerald-400' },
-                    { icon: MapPin, label: 'Address', value: mockUser.address, iconColor: 'text-rose-400' },
+                    { icon: Phone, label: 'Contact Number', value: mockUser.contactNumber, iconColor: 'text-emerald-400' },
+                    { icon: MapPin, label: 'Location', value: `${mockUser.areaName}, ${mockUser.emirate}`, iconColor: 'text-rose-400' },
                   ].map((item, index) => (
                     <div 
                       key={index}
@@ -745,27 +1019,6 @@ export default function UserDashboard() {
                       </div>
                       <span className={`text-sm font-medium text-right max-w-[200px] truncate ${isDarkMode ? 'text-white/90' : 'text-gray-900'}`}>{item.value}</span>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Quick Actions */}
-              <div className={`rounded-2xl border dashboard-card-padding-lg shadow-xl ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] shadow-black/20' : 'bg-white border-gray-200'}`}>
-                <h3 className={`text-base font-semibold mb-5 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Quick Actions</h3>
-                <div className="dashboard-grid-2">
-                  {[
-                    { icon: Eye, label: 'View ID Card', color: 'hover:border-violet-500/40 hover:bg-violet-500/10', iconColor: 'group-hover:text-violet-400', shadow: 'hover:shadow-violet-500/15' },
-                    { icon: Download, label: 'Download Certificate', color: 'hover:border-cyan-500/40 hover:bg-cyan-500/10', iconColor: 'group-hover:text-cyan-400', shadow: 'hover:shadow-cyan-500/15' },
-                    { icon: Bell, label: 'Set Reminders', color: 'hover:border-amber-500/40 hover:bg-amber-500/10', iconColor: 'group-hover:text-amber-400', shadow: 'hover:shadow-amber-500/15' },
-                    { icon: MessageCircle, label: 'Contact Support', color: 'hover:border-emerald-500/40 hover:bg-emerald-500/10', iconColor: 'group-hover:text-emerald-400', shadow: 'hover:shadow-emerald-500/15' },
-                  ].map((action, index) => (
-                    <button 
-                      key={index}
-                      className={`group flex flex-col items-center justify-center gap-2.5 p-5 rounded-xl border transition-all duration-300 hover:scale-[1.03] hover:-translate-y-1 ${isDarkMode ? `border-white/[0.06] ${action.color} hover:shadow-lg ${action.shadow}` : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'}`}
-                    >
-                      <action.icon className={`w-5 h-5 transition-all duration-300 group-hover:scale-110 ${isDarkMode ? `text-white/35 ${action.iconColor}` : 'text-gray-500'}`} />
-                      <span className={`text-xs font-medium text-center ${isDarkMode ? 'text-white/50 group-hover:text-white' : 'text-gray-700'}`}>{action.label}</span>
-                    </button>
                   ))}
                 </div>
               </div>
@@ -787,42 +1040,60 @@ export default function UserDashboard() {
               {mockEvents.map((event, index) => (
                 <div 
                   key={event.id} 
-                  className={`group rounded-2xl border p-6 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 cursor-pointer shadow-lg ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] hover:border-cyan-500/40 hover:bg-cyan-500/5 shadow-black/20 hover:shadow-cyan-500/10' : 'bg-white border-gray-200 hover:border-gray-300 hover:shadow-xl'}`}
+                  className={`group rounded-2xl border overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 cursor-pointer shadow-lg ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] hover:border-cyan-500/40 hover:bg-cyan-500/5 shadow-black/20 hover:shadow-cyan-500/10' : 'bg-white border-gray-200 hover:border-gray-300 hover:shadow-xl'}`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="flex gap-4">
-                    {/* Date Badge */}
-                    <div className={`flex-shrink-0 w-16 h-16 rounded-xl flex flex-col items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg ${isDarkMode ? 'bg-gradient-to-br from-cyan-500/25 to-blue-500/25 shadow-cyan-500/20' : 'bg-gray-100'}`}>
-                      <span className={`text-[10px] font-semibold uppercase ${isDarkMode ? 'text-cyan-400' : 'text-gray-500'}`}>
-                        {new Date(event.date).toLocaleDateString('en-US', { month: 'short' })}
-                      </span>
-                      <span className={`text-2xl font-bold -mt-0.5 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                        {new Date(event.date).getDate()}
-                      </span>
+                  {/* Banner Image */}
+                  {event.bannerImage && (
+                    <div className="w-full h-48 overflow-hidden">
+                      <img 
+                        src={event.bannerImage} 
+                        alt={event.title} 
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
                     </div>
+                  )}
+                  
+                  <div className="p-6">
+                    <div className="flex gap-4">
+                      {/* Date Badge */}
+                      <div className={`flex-shrink-0 w-16 h-16 rounded-xl flex flex-col items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg ${isDarkMode ? 'bg-gradient-to-br from-cyan-500/25 to-blue-500/25 shadow-cyan-500/20' : 'bg-gray-100'}`}>
+                        <span className={`text-[10px] font-semibold uppercase ${isDarkMode ? 'text-cyan-400' : 'text-gray-500'}`}>
+                          {new Date(event.date).toLocaleDateString('en-US', { month: 'short' })}
+                        </span>
+                        <span className={`text-2xl font-bold -mt-0.5 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                          {new Date(event.date).getDate()}
+                        </span>
+                      </div>
 
-                    {/* Event Info */}
-                    <div className="flex-1 min-w-0">
-                      <h3 className={`font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{event.title}</h3>
-                      <div className="space-y-2">
-                        <p className={`text-sm flex items-center gap-2 ${isDarkMode ? 'text-white/45' : 'text-gray-500'}`}>
-                          <Clock className={`w-3.5 h-3.5 ${isDarkMode ? 'text-amber-400' : ''}`} />
-                          {event.time}
-                        </p>
-                        <p className={`text-sm flex items-center gap-2 ${isDarkMode ? 'text-white/45' : 'text-gray-500'}`}>
-                          <MapPin className={`w-3.5 h-3.5 ${isDarkMode ? 'text-rose-400' : ''}`} />
-                          {event.location}
-                        </p>
+                      {/* Event Info */}
+                      <div className="flex-1 min-w-0">
+                        <h3 className={`font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{event.title}</h3>
+                        {event.description && (
+                          <p className={`text-sm mb-2 ${isDarkMode ? 'text-white/60' : 'text-gray-600'}`}>
+                            {event.description}
+                          </p>
+                        )}
+                        <div className="space-y-2">
+                          <p className={`text-sm flex items-center gap-2 ${isDarkMode ? 'text-white/45' : 'text-gray-500'}`}>
+                            <Clock className={`w-3.5 h-3.5 ${isDarkMode ? 'text-amber-400' : ''}`} />
+                            {event.time}
+                          </p>
+                          <p className={`text-sm flex items-center gap-2 ${isDarkMode ? 'text-white/45' : 'text-gray-500'}`}>
+                            <MapPin className={`w-3.5 h-3.5 ${isDarkMode ? 'text-rose-400' : ''}`} />
+                            {event.location}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Register Button */}
-                  <div className={`mt-5 pt-5 border-t ${isDarkMode ? 'border-white/[0.06]' : 'border-gray-100'}`}>
-                    <button className={`w-full py-3 rounded-xl text-sm font-medium transition-all duration-300 flex items-center justify-center gap-2 hover:-translate-y-0.5 ${isDarkMode ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-400 hover:from-cyan-500/30 hover:to-blue-500/30 hover:shadow-lg hover:shadow-cyan-500/20' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
-                      Register for event
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </button>
+                    {/* Register Button */}
+                    <div className={`mt-5 pt-5 border-t ${isDarkMode ? 'border-white/[0.06]' : 'border-gray-100'}`}>
+                      <button className={`w-full py-3 rounded-xl text-sm font-medium transition-all duration-300 flex items-center justify-center gap-2 hover:-translate-y-0.5 ${isDarkMode ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-400 hover:from-cyan-500/30 hover:to-blue-500/30 hover:shadow-lg hover:shadow-cyan-500/20' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
+                        Register for event
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -887,10 +1158,102 @@ export default function UserDashboard() {
             )}
           </div>
         )}
+
+        {/* Job Recruitment Section */}
+        {activeSection === 'jobs' && (
+          <div className="dashboard-stack-lg animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Job Recruitment</h2>
+                <p className={`text-sm mt-1 ${isDarkMode ? 'text-white/50' : 'text-gray-600'}`}>Browse available job opportunities</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {mockJobs.map((job, index) => (
+                <div 
+                  key={job.id}
+                  className={`group rounded-2xl border p-6 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 shadow-lg ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06] hover:border-white/15 hover:shadow-xl hover:shadow-violet-500/10' : 'bg-white border-gray-200 hover:border-gray-300 hover:shadow-md'}`}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  {/* Job Header */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h3 className={`text-lg font-semibold mb-1 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                        {job.jobTitle}
+                      </h3>
+                      <p className={`text-sm ${isDarkMode ? 'text-violet-400' : 'text-gray-600'}`}>
+                        {job.role}
+                      </p>
+                    </div>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${isDarkMode ? 'bg-green-500/20 text-green-400' : 'bg-green-100 text-green-800'}`}>
+                      Open
+                    </span>
+                  </div>
+
+                  {/* Job Details */}
+                  <div className="space-y-2 mb-4">
+                    <div className="flex items-center text-sm">
+                      <MapPin className={`w-4 h-4 mr-2 ${isDarkMode ? 'text-white/40' : 'text-gray-500'}`} />
+                      <span className={isDarkMode ? 'text-white/60' : 'text-gray-700'}>{job.location}</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <Briefcase className={`w-4 h-4 mr-2 ${isDarkMode ? 'text-white/40' : 'text-gray-500'}`} />
+                      <span className={isDarkMode ? 'text-white/60' : 'text-gray-700'}>
+                        {job.employmentType} • {job.experienceLevel}
+                      </span>
+                    </div>
+                    {job.salary && (
+                      <div className="flex items-center text-sm">
+                        <CircleDollarSign className={`w-4 h-4 mr-2 ${isDarkMode ? 'text-white/40' : 'text-gray-500'}`} />
+                        <span className={isDarkMode ? 'text-white/60' : 'text-gray-700'}>{job.salary}</span>
+                      </div>
+                    )}
+                    <div className="flex items-center text-sm">
+                      <Calendar className={`w-4 h-4 mr-2 ${isDarkMode ? 'text-white/40' : 'text-gray-500'}`} />
+                      <span className={isDarkMode ? 'text-white/60' : 'text-gray-700'}>
+                        Apply by: {new Date(job.applyByDate).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Job Description */}
+                  <p className={`text-sm leading-relaxed mb-6 line-clamp-3 ${isDarkMode ? 'text-white/50' : 'text-gray-600'}`}>
+                    {job.description}
+                  </p>
+
+                  {/* Apply Button */}
+                  <div className="flex items-center justify-between pt-4 border-t ${isDarkMode ? 'border-white/[0.06]' : 'border-gray-200'}">
+                    <p className={`text-xs ${isDarkMode ? 'text-white/30' : 'text-gray-400'}`}>
+                      Posted on {new Date(job.createdAt).toLocaleDateString()}
+                    </p>
+                    <a
+                      href={job.applicationLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg ${isDarkMode ? 'bg-violet-600 text-white hover:bg-violet-500 hover:shadow-violet-500/30' : 'bg-gray-900 text-white hover:bg-gray-800'}`}
+                    >
+                      Apply Now
+                      <LinkIcon className="w-4 h-4" />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {mockJobs.length === 0 && (
+              <div className={`rounded-2xl border p-12 text-center ${isDarkMode ? 'bg-white/[0.02] border-white/[0.06]' : 'bg-white border-gray-200'}`}>
+                <Briefcase className={`w-12 h-12 mx-auto mb-4 ${isDarkMode ? 'text-white/15' : 'text-gray-300'}`} />
+                <p className={isDarkMode ? 'text-white/45' : 'text-gray-500'}>No job openings at the moment.</p>
+                <p className={`text-sm mt-2 ${isDarkMode ? 'text-white/30' : 'text-gray-400'}`}>Check back later for new opportunities.</p>
+              </div>
+            )}
+          </div>
+        )}
       </main>
 
       {/* Footer */}
-      <footer className={`mt-auto border-t ${isDarkMode ? 'bg-gradient-to-b from-[#09090b] via-[#07070a] to-[#050507] border-white/[0.06]' : 'bg-gradient-to-b from-gray-50 to-gray-100 border-gray-200'}`}>
+      <footer className={`mt-auto border-t relative z-50 ${isDarkMode ? 'bg-[#0a0a0a] border-white/10' : 'bg-white border-gray-300'}`}>
         {/* Main Footer Content */}
         <div className="w-full max-w-[1400px] mx-auto px-8 lg:px-12 pt-12 pb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
@@ -901,22 +1264,22 @@ export default function UserDashboard() {
                 <div className={`w-10 h-10 rounded-xl p-1.5 flex items-center justify-center ${isDarkMode ? 'bg-white/[0.08]' : 'bg-gray-900'}`}>
                   <img src="/Images/image logo.png" alt="VARA" className="h-7 w-auto object-contain" />
                 </div>
-                <span className={`text-xl font-semibold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>VARA</span>
+                <span className={`text-xl font-semibold tracking-tight ${isDarkMode ? 'text-white' : 'text-black'}`}>VARA</span>
               </div>
-              <p className={`text-sm leading-relaxed text-center md:text-left max-w-[260px] ${isDarkMode ? 'text-white/35' : 'text-gray-500'}`}>
+              <p className={`text-sm leading-relaxed text-center md:text-left max-w-[260px] ${isDarkMode ? 'text-white' : 'text-black'}`}>
                 Empowering members through community and professional development.
               </p>
             </div>
 
             {/* Quick Links */}
             <div className="flex flex-col items-center">
-              <h4 className={`text-xs font-semibold uppercase tracking-widest mb-5 ${isDarkMode ? 'text-white/50' : 'text-gray-700'}`}>Quick Actions</h4>
+              <h4 className={`text-xs font-semibold uppercase tracking-widest mb-5 ${isDarkMode ? 'text-white' : 'text-black'}`}>Quick Links</h4>
               <nav className="flex flex-col items-center gap-3">
                 {['My Profile', 'Membership', 'Events', 'Support'].map((link) => (
                   <a 
                     key={link} 
                     href="#" 
-                    className={`text-sm transition-all duration-200 hover:translate-x-1 ${isDarkMode ? 'text-white/35 hover:text-white' : 'text-gray-500 hover:text-gray-900'}`}
+                    className={`text-sm transition-all duration-200 hover:translate-x-1 ${isDarkMode ? 'text-white hover:text-white/80' : 'text-black hover:text-blue-600'}`}
                   >
                     {link}
                   </a>
@@ -926,12 +1289,12 @@ export default function UserDashboard() {
 
             {/* Contact */}
             <div className="flex flex-col items-center md:items-end">
-              <h4 className={`text-xs font-semibold uppercase tracking-widest mb-5 ${isDarkMode ? 'text-white/50' : 'text-gray-700'}`}>Contact Us</h4>
+              <h4 className={`text-xs font-semibold uppercase tracking-widest mb-5 ${isDarkMode ? 'text-white' : 'text-black'}`}>Contact Us</h4>
               <div className="flex flex-col items-center md:items-end gap-2 mb-5">
-                <a href="mailto:info@vara.org" className={`text-sm transition-colors duration-200 ${isDarkMode ? 'text-white/35 hover:text-white' : 'text-gray-500 hover:text-gray-900'}`}>
+                <a href="mailto:info@vara.org" className={`text-sm transition-colors duration-200 ${isDarkMode ? 'text-white hover:text-white/80' : 'text-black hover:text-blue-600'}`}>
                   info@vara.org
                 </a>
-                <p className={`text-sm ${isDarkMode ? 'text-white/35' : 'text-gray-500'}`}>+1 (555) 123-4567</p>
+                <p className={`text-sm ${isDarkMode ? 'text-white' : 'text-black'}`}>+1 (555) 123-4567</p>
               </div>
               {/* Social Icons */}
               <div className="flex items-center gap-3">
@@ -939,7 +1302,7 @@ export default function UserDashboard() {
                   <a 
                     key={index} 
                     href="#" 
-                    className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 ${isDarkMode ? 'bg-white/[0.05] text-white/35 hover:bg-white/10 hover:text-white' : 'bg-gray-200 text-gray-500 hover:bg-gray-900 hover:text-white'}`}
+                    className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 ${isDarkMode ? 'bg-white/10 text-white hover:bg-white/20 hover:text-white' : 'bg-gray-800 text-white hover:bg-blue-600 hover:text-white'}`}
                   >
                     <Icon className="w-4 h-4" />
                   </a>
@@ -950,21 +1313,21 @@ export default function UserDashboard() {
         </div>
 
         {/* Bottom Footer */}
-        <div className={`border-t ${isDarkMode ? 'border-white/[0.06] bg-[#050507]' : 'border-gray-200 bg-gray-100'}`}>
+        <div className={`border-t ${isDarkMode ? 'border-white/10 bg-black' : 'border-gray-300 bg-gray-50'}`}>
           <div className="w-full max-w-[1400px] mx-auto px-8 lg:px-12 py-5">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <div className={`w-5 h-5 rounded-md flex items-center justify-center ${isDarkMode ? 'bg-white/[0.08]' : 'bg-gray-900'}`}>
                   <img src="/Images/image logo.png" alt="VARA" className="h-3.5 w-auto object-contain" />
                 </div>
-                <p className={`text-sm ${isDarkMode ? 'text-white/25' : 'text-gray-500'}`}>
+                <p className={`text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>
                   © 2026 VARA Association. All rights reserved.
                 </p>
               </div>
-              <div className={`flex items-center gap-6 text-sm ${isDarkMode ? 'text-white/25' : 'text-gray-500'}`}>
-                <a href="#" className={`transition-colors duration-200 ${isDarkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>Privacy Policy</a>
-                <span className={isDarkMode ? 'text-white/10' : 'text-gray-300'}>|</span>
-                <a href="#" className={`transition-colors duration-200 ${isDarkMode ? 'hover:text-white' : 'hover:text-gray-900'}`}>Terms of Service</a>
+              <div className={`flex items-center gap-6 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                <a href="#" className={`transition-colors duration-200 ${isDarkMode ? 'hover:text-white/80' : 'hover:text-blue-600'}`}>Privacy Policy</a>
+                <span className={isDarkMode ? 'text-white/20' : 'text-gray-400'}>|</span>
+                <a href="#" className={`transition-colors duration-200 ${isDarkMode ? 'hover:text-white/80' : 'hover:text-blue-600'}`}>Terms of Service</a>
               </div>
             </div>
           </div>
@@ -1044,6 +1407,135 @@ export default function UserDashboard() {
           background: ${isDarkMode ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)'};
         }
       `}</style>
+
+      {/* ID Card Modal */}
+      {showIdCard && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={() => setShowIdCard(false)}></div>
+          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <button 
+              onClick={() => setShowIdCard(false)}
+              className="sticky top-0 left-full mb-2 text-white hover:text-gray-300 transition-colors z-10"
+            >
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            {/* ID Card Design - Matching Screenshot */}
+            <div className="relative bg-[#0047BB] rounded-2xl overflow-hidden shadow-2xl aspect-[3/4] min-h-[600px]">
+              {/* Header */}
+              <div className="absolute top-0 left-0 right-0 p-8">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <p className="text-[#4A9FFF] text-sm uppercase tracking-[0.2em] font-light mb-1">THE CREATIVE</p>
+                    <p className="text-[#4A9FFF] text-sm uppercase tracking-[0.2em] font-light mb-1">MALAYALI</p>
+                    <p className="text-[#4A9FFF] text-sm uppercase tracking-[0.2em] font-light mb-1">DESIGNERS</p>
+                    <p className="text-[#4A9FFF] text-sm uppercase tracking-[0.2em] font-light">OF UAE</p>
+                  </div>
+                  <div className="w-20 h-20 rounded-full border-2 border-[#4A9FFF] flex items-center justify-center">
+                    <div className="text-center">
+                      <p className="text-[#4A9FFF] text-xs font-bold">VARA</p>
+                      <p className="text-[#4A9FFF] text-[8px]">നാര</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Main Content */}
+              <div className="absolute top-32 left-0 right-0 px-8">
+                <div className="mb-8">
+                  <h1 className="text-6xl font-black mb-2">
+                    <span className="text-white" style={{ fontFamily: 'Arial, sans-serif', letterSpacing: '-0.02em' }}>Be</span>
+                  </h1>
+                  <h1 className="text-6xl font-black mb-2">
+                    <span className="text-white" style={{ fontFamily: 'Arial, sans-serif', letterSpacing: '-0.02em' }}>a </span>
+                    <span className="text-[#FFD700]" style={{ fontFamily: 'Arial, sans-serif', letterSpacing: '-0.02em' }}>varafied</span>
+                    <span className="inline-block w-10 h-10 bg-[#FFD700] rounded-lg ml-2 align-middle"></span>
+                  </h1>
+                  <h1 className="text-6xl font-black">
+                    <span className="text-white" style={{ fontFamily: 'Arial, sans-serif', letterSpacing: '-0.02em' }}>member</span>
+                  </h1>
+                </div>
+
+                <p className="text-white text-sm mb-8 max-w-md">
+                  Official inauguration of verified<br />
+                  Membership Registration
+                </p>
+
+                {/* Member Photo Section */}
+                <div className="flex items-end gap-6 mb-8">
+                  <div className="relative">
+                    {/* Yellow decorative shape behind photo */}
+                    <div className="absolute -left-4 top-4 w-32 h-32 bg-[#FFD700] rounded-[40px] transform rotate-12"></div>
+                    <div className="relative w-32 h-32 rounded-[40px] overflow-hidden bg-white z-10">
+                      <div className="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                        <User className="w-16 h-16 text-white" />
+                      </div>
+                    </div>
+                    <div className="mt-3">
+                      <p className="text-white text-lg font-bold">{mockUser.fullName.toUpperCase()}</p>
+                      <p className="text-[#4A9FFF] text-xs uppercase tracking-wider">FOUNDER & CHAIRMAN OF VARA UAE</p>
+                    </div>
+                  </div>
+
+                  {/* Date Info */}
+                  <div className="flex-1 grid grid-cols-2 gap-4">
+                    <div className="border-2 border-[#4A9FFF] rounded-xl p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-8 h-8 rounded-full border-2 border-[#4A9FFF]"></div>
+                        <div className="w-8 h-8 border-2 border-[#4A9FFF] rounded-lg"></div>
+                      </div>
+                      <p className="text-white text-xs uppercase mb-1">STARTS</p>
+                      <p className="text-white text-xs uppercase mb-1">ON</p>
+                      <p className="text-white text-xs uppercase mb-2">JANUARY</p>
+                      <p className="text-[#4A9FFF] text-5xl font-bold leading-none">12</p>
+                      <p className="text-white text-xs uppercase mt-1">2026</p>
+                    </div>
+
+                    <div className="border-2 border-[#4A9FFF] rounded-xl p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-8 h-8 border-2 border-[#4A9FFF] rounded-full"></div>
+                        <div className="w-8 h-8 border-2 border-[#4A9FFF]" style={{ borderRadius: '40% 60% 70% 30% / 40% 50% 60% 50%' }}></div>
+                      </div>
+                      <p className="text-white text-xs uppercase mb-1">ENDS</p>
+                      <p className="text-white text-xs uppercase mb-1">ON</p>
+                      <p className="text-white text-xs uppercase mb-2">JANUARY</p>
+                      <p className="text-[#4A9FFF] text-5xl font-bold leading-none">30</p>
+                      <p className="text-white text-xs uppercase mt-1">2026</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="absolute bottom-8 left-8 right-8">
+                <p className="text-white text-sm mb-1">For more info</p>
+                <div className="flex items-center justify-between">
+                  <p className="text-white font-bold text-lg">www.varauae.com</p>
+                  <div className="flex gap-2 text-[#4A9FFF] text-xs">
+                    <span>f</span>
+                    <span>@</span>
+                    <span>e:</span>
+                    <span>d</span>
+                    <span>in</span>
+                    <span>@varauae</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Decorative dots pattern */}
+              <div className="absolute left-8 top-1/2 transform -translate-y-1/2">
+                <div className="grid grid-cols-3 gap-2">
+                  {[...Array(15)].map((_, i) => (
+                    <div key={i} className={`w-3 h-3 rounded-full ${i < 12 ? 'bg-[#4A9FFF]' : 'bg-[#FFD700]'}`}></div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
